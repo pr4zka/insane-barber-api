@@ -1,0 +1,36 @@
+import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+export declare class PrismaService implements OnModuleInit, OnModuleDestroy {
+    private pool;
+    private _client;
+    constructor();
+    onModuleInit(): Promise<void>;
+    onModuleDestroy(): Promise<void>;
+    get rol(): any;
+    get usuario(): any;
+    get cliente(): any;
+    get barbero(): any;
+    get servicio(): any;
+    get turno(): any;
+    get promocion(): any;
+    get descuento(): any;
+    get reclamo(): any;
+    get seguimientoReclamo(): any;
+    get presupuesto(): any;
+    get detallePresupuesto(): any;
+    get insumo(): any;
+    get insumoUtilizado(): any;
+    get caja(): any;
+    get movimientoCaja(): any;
+    get pago(): any;
+    get notaCreditoDebito(): any;
+    get libroVentas(): any;
+    get proveedor(): any;
+    get ordenCompra(): any;
+    get detalleOrdenCompra(): any;
+    get libroCompras(): any;
+    get notaRemision(): any;
+    get notaCDCompra(): any;
+    get ajusteCompra(): any;
+    get notaRemisionVenta(): any;
+    $transaction(fn: Parameters<typeof this._client.$transaction>[0]): any;
+}

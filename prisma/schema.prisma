@@ -1,0 +1,396 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// Insane Barber — Modelo de Datos
+// ==========================================
+
+model Rol {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique @db.VarChar(50)
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+model Usuario {
+  id       Int     @id @default(autoincrement())
+  nombre   String  @db.VarChar(100)
+  email    String  @unique @db.VarChar(150)
+  password String  @db.VarChar(255)
+  rolId    Int     @map("rol_id")
+  estado   Boolean @default(true)
+
+  rol     Rol      @relation(fields: [rolId], references: [id])
+  cajas   Caja[]
+  barbero Barbero?
+
+  @@map("usuarios")
+}
+
+model Cliente {
+  id            Int      @id @default(autoincrement())
+  nombre        String   @db.VarChar(100)
+  telefono      String   @db.VarChar(30)
+  email         String   @db.VarChar(150)
+  fechaRegistro DateTime @default(now()) @map("fecha_registro")
+
+  turnos       Turno[]
+  reclamos     Reclamo[]
+  presupuestos Presupuesto[]
+
+  @@map("clientes")
+}
+
+model Barbero {
+  id           Int     @id @default(autoincrement())
+  nombre       String  @db.VarChar(100)
+  telefono     String  @db.VarChar(30)
+  especialidad String  @db.VarChar(100)
+  estado       Boolean @default(true)
+  usuarioId    Int?    @unique @map("usuario_id")
+
+  usuario Usuario? @relation(fields: [usuarioId], references: [id])
+  turnos  Turno[]
+
+  @@map("barberos")
+}
+
+model Servicio {
+  id          Int     @id @default(autoincrement())
+  nombre      String  @db.VarChar(100)
+  descripcion String  @db.Text
+  precio      Decimal @db.Decimal(12, 0)
+  duracionMin Int     @map("duracion_min")
+  estado      Boolean @default(true)
+
+  turnos              Turno[]
+  detallesPresupuesto DetallePresupuesto[]
+
+  @@map("servicios")
+}
+
+model Turno {
+  id          Int    @id @default(autoincrement())
+  clienteId   Int    @map("cliente_id")
+  barberoId   Int    @map("barbero_id")
+  servicioId  Int    @map("servicio_id")
+  fecha       DateTime @db.Date
+  hora        String @db.VarChar(10)
+  estado      String @default("pendiente") @db.VarChar(20)
+  observacion String @default("") @db.Text
+
+  cliente  Cliente  @relation(fields: [clienteId], references: [id])
+  barbero  Barbero  @relation(fields: [barberoId], references: [id])
+  servicio Servicio @relation(fields: [servicioId], references: [id])
+
+  pago              Pago?
+  insumosUtilizados InsumoUtilizado[]
+  notaRemisionVenta NotaRemisionVenta?
+
+  @@map("turnos")
+}
+
+model Promocion {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(100)
+  descripcion String   @db.Text
+  porcentaje  Decimal  @db.Decimal(5, 2)
+  fechaInicio DateTime @map("fecha_inicio") @db.Date
+  fechaFin    DateTime @map("fecha_fin") @db.Date
+  estado      Boolean  @default(true)
+
+  pagos Pago[]
+
+  @@map("promociones")
+}
+
+model Descuento {
+  id          Int     @id @default(autoincrement())
+  nombre      String  @db.VarChar(100)
+  descripcion String  @db.Text
+  porcentaje  Decimal @db.Decimal(5, 2)
+  estado      Boolean @default(true)
+
+  pagos Pago[]
+
+  @@map("descuentos")
+}
+
+model Reclamo {
+  id          Int      @id @default(autoincrement())
+  clienteId   Int      @map("cliente_id")
+  descripcion String   @db.Text
+  fecha       DateTime @default(now())
+  estado      String   @default("pendiente") @db.VarChar(20)
+
+  cliente       Cliente              @relation(fields: [clienteId], references: [id])
+  seguimientos  SeguimientoReclamo[]
+
+  @@map("reclamos")
+}
+
+model SeguimientoReclamo {
+  id             Int      @id @default(autoincrement())
+  reclamoId      Int      @map("reclamo_id")
+  comentario     String   @db.Text
+  estadoAnterior String   @map("estado_anterior") @db.VarChar(20)
+  estadoNuevo    String   @map("estado_nuevo") @db.VarChar(20)
+  fecha          DateTime @default(now())
+
+  reclamo Reclamo @relation(fields: [reclamoId], references: [id])
+
+  @@map("seguimientos_reclamo")
+}
+
+model Presupuesto {
+  id          Int      @id @default(autoincrement())
+  clienteId   Int      @map("cliente_id")
+  fecha       DateTime @default(now())
+  total       Decimal  @default(0) @db.Decimal(12, 0)
+  estado      String   @default("borrador") @db.VarChar(20)
+  observacion String   @default("") @db.Text
+
+  cliente  Cliente              @relation(fields: [clienteId], references: [id])
+  detalles DetallePresupuesto[]
+
+  @@map("presupuestos")
+}
+
+model DetallePresupuesto {
+  id              Int     @id @default(autoincrement())
+  presupuestoId   Int     @map("presupuesto_id")
+  servicioId      Int     @map("servicio_id")
+  cantidad        Int
+  precioUnitario  Decimal @map("precio_unitario") @db.Decimal(12, 0)
+  subtotal        Decimal @db.Decimal(12, 0)
+
+  presupuesto Presupuesto @relation(fields: [presupuestoId], references: [id])
+  servicio    Servicio    @relation(fields: [servicioId], references: [id])
+
+  @@map("detalles_presupuesto")
+}
+
+model Insumo {
+  id          Int     @id @default(autoincrement())
+  nombre      String  @db.VarChar(100)
+  descripcion String  @db.Text
+  unidad      String  @db.VarChar(30)
+  stock       Decimal @db.Decimal(10, 2)
+  estado      Boolean @default(true)
+
+  usos                InsumoUtilizado[]
+  detallesOrdenCompra DetalleOrdenCompra[]
+
+  @@map("insumos")
+}
+
+model InsumoUtilizado {
+  id       Int      @id @default(autoincrement())
+  turnoId  Int      @map("turno_id")
+  insumoId Int      @map("insumo_id")
+  cantidad Decimal  @db.Decimal(10, 2)
+  fecha    DateTime @default(now())
+
+  turno  Turno  @relation(fields: [turnoId], references: [id])
+  insumo Insumo @relation(fields: [insumoId], references: [id])
+
+  @@map("insumos_utilizados")
+}
+
+model Caja {
+  id             Int       @id @default(autoincrement())
+  usuarioId      Int       @map("usuario_id")
+  fechaApertura  DateTime  @default(now()) @map("fecha_apertura")
+  fechaCierre    DateTime? @map("fecha_cierre")
+  montoInicial   Decimal   @map("monto_inicial") @db.Decimal(12, 0)
+  montoFinal     Decimal?  @map("monto_final") @db.Decimal(12, 0)
+  estado         String    @default("abierta") @db.VarChar(20)
+
+  usuario     Usuario          @relation(fields: [usuarioId], references: [id])
+  movimientos MovimientoCaja[]
+
+  @@map("cajas")
+}
+
+model MovimientoCaja {
+  id       Int      @id @default(autoincrement())
+  cajaId   Int      @map("caja_id")
+  tipo     String   @db.VarChar(20)
+  concepto String   @db.VarChar(255)
+  monto    Decimal  @db.Decimal(12, 0)
+  fecha    DateTime @default(now())
+
+  caja Caja @relation(fields: [cajaId], references: [id])
+
+  @@map("movimientos_caja")
+}
+
+model Pago {
+  id             Int      @id @default(autoincrement())
+  turnoId        Int      @unique @map("turno_id")
+  metodoPago     String   @map("metodo_pago") @db.VarChar(20)
+  monto          Decimal  @db.Decimal(12, 0)
+  montoOriginal  Decimal? @map("monto_original") @db.Decimal(12, 0)
+  promocionId    Int?     @map("promocion_id")
+  descuentoId    Int?     @map("descuento_id")
+  porcentajeAplicado Decimal? @map("porcentaje_aplicado") @db.Decimal(5, 2)
+  dpagoRef       String?  @map("dpago_ref") @db.VarChar(100)
+  estado         String   @default("completado") @db.VarChar(20)
+  fecha          DateTime @default(now())
+
+  turno     Turno      @relation(fields: [turnoId], references: [id])
+  promocion Promocion? @relation(fields: [promocionId], references: [id])
+  descuento Descuento? @relation(fields: [descuentoId], references: [id])
+
+  notas      NotaCreditoDebito[]
+  libroVenta LibroVentas?
+
+  @@map("pagos")
+}
+
+model NotaCreditoDebito {
+  id     Int      @id @default(autoincrement())
+  pagoId Int      @map("pago_id")
+  tipo   String   @db.VarChar(10)
+  monto  Decimal  @db.Decimal(12, 0)
+  motivo String   @db.Text
+  estado String   @default("emitida") @db.VarChar(20)
+  fecha  DateTime @default(now())
+
+  pago Pago @relation(fields: [pagoId], references: [id])
+
+  @@map("notas_credito_debito")
+}
+
+model LibroVentas {
+  id         Int      @id @default(autoincrement())
+  pagoId     Int      @unique @map("pago_id")
+  fecha      DateTime @default(now())
+  concepto   String   @db.VarChar(255)
+  monto      Decimal  @db.Decimal(12, 0)
+  metodoPago String   @map("metodo_pago") @db.VarChar(20)
+
+  pago Pago @relation(fields: [pagoId], references: [id])
+
+  @@map("libro_ventas")
+}
+
+model NotaRemisionVenta {
+  id          Int      @id @default(autoincrement())
+  turnoId     Int      @unique @map("turno_id")
+  fecha       DateTime @default(now())
+  observacion String   @default("") @db.Text
+
+  turno Turno @relation(fields: [turnoId], references: [id])
+
+  @@map("notas_remision_venta")
+}
+
+// ==========================================
+// Módulo de Compras
+// ==========================================
+
+model Proveedor {
+  id        Int     @id @default(autoincrement())
+  nombre    String  @db.VarChar(100)
+  ruc       String  @db.VarChar(30)
+  telefono  String  @db.VarChar(30)
+  email     String  @db.VarChar(150)
+  direccion String  @db.VarChar(255)
+  estado    Boolean @default(true)
+
+  ordenesCompra OrdenCompra[]
+
+  @@map("proveedores")
+}
+
+model OrdenCompra {
+  id           Int      @id @default(autoincrement())
+  proveedorId  Int      @map("proveedor_id")
+  fecha        DateTime @default(now())
+  estado       String   @default("pendiente") @db.VarChar(20)
+  total        Decimal  @default(0) @db.Decimal(12, 0)
+  observacion  String   @default("") @db.Text
+
+  proveedor    Proveedor             @relation(fields: [proveedorId], references: [id])
+  detalles     DetalleOrdenCompra[]
+  libroCompras LibroCompras?
+  notaRemision NotaRemision?
+  notasCD      NotaCDCompra[]
+  ajustes      AjusteCompra[]
+
+  @@map("ordenes_compra")
+}
+
+model DetalleOrdenCompra {
+  id              Int     @id @default(autoincrement())
+  ordenCompraId   Int     @map("orden_compra_id")
+  insumoId        Int     @map("insumo_id")
+  cantidad        Decimal @db.Decimal(10, 2)
+  precioUnitario  Decimal @map("precio_unitario") @db.Decimal(12, 0)
+  subtotal        Decimal @db.Decimal(12, 0)
+
+  ordenCompra OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+  insumo      Insumo      @relation(fields: [insumoId], references: [id])
+
+  @@map("detalles_orden_compra")
+}
+
+model LibroCompras {
+  id            Int      @id @default(autoincrement())
+  ordenCompraId Int      @unique @map("orden_compra_id")
+  fecha         DateTime @default(now())
+  concepto      String   @db.VarChar(255)
+  monto         Decimal  @db.Decimal(12, 0)
+  proveedor     String   @db.VarChar(100)
+
+  ordenCompra OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+
+  @@map("libro_compras")
+}
+
+model NotaRemision {
+  id            Int      @id @default(autoincrement())
+  ordenCompraId Int      @unique @map("orden_compra_id")
+  fecha         DateTime @default(now())
+  observacion   String   @default("") @db.Text
+
+  ordenCompra OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+
+  @@map("notas_remision")
+}
+
+model NotaCDCompra {
+  id            Int      @id @default(autoincrement())
+  ordenCompraId Int      @map("orden_compra_id")
+  tipo          String   @db.VarChar(10)
+  monto         Decimal  @db.Decimal(12, 0)
+  motivo        String   @db.Text
+  estado        String   @default("emitida") @db.VarChar(20)
+  fecha         DateTime @default(now())
+
+  ordenCompra OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+
+  @@map("notas_cd_compra")
+}
+
+model AjusteCompra {
+  id            Int      @id @default(autoincrement())
+  ordenCompraId Int      @map("orden_compra_id")
+  tipo          String   @db.VarChar(20) // "cantidad" or "precio"
+  descripcion   String   @db.Text
+  montoAnterior Decimal  @map("monto_anterior") @db.Decimal(12, 0)
+  montoNuevo    Decimal  @map("monto_nuevo") @db.Decimal(12, 0)
+  fecha         DateTime @default(now())
+
+  ordenCompra OrdenCompra @relation(fields: [ordenCompraId], references: [id])
+
+  @@map("ajustes_compra")
+}
