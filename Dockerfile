@@ -51,6 +51,6 @@ USER nestjs
 EXPOSE 3000
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=40s --retries=5 \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api/docs || exit 1
 
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
