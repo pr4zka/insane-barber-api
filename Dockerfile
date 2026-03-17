@@ -23,7 +23,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Verify build output exists
-RUN test -f dist/main.js || (echo "ERROR: dist/main.js not found" && ls -la dist && exit 1)
+RUN test -f dist/src/main.js || (echo "ERROR: dist/src/main.js not found" && exit 1)
 
 # ── Stage 3: Production ──
 FROM node:20-alpine AS runner
@@ -44,14 +44,13 @@ COPY --from=builder /app/generated ./generated
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./
 
-# If your app needs any static assets/config files, copy them here too
-# COPY --from=builder /app/src/templates ./src/templates
-
 RUN chown -R nestjs:nodejs /app
 
 USER nestjs
 
 EXPOSE 3000
 
+HEALTHCHECK --interval=10s --timeout=5s --start-period=40s --retries=5 \
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api || exit 1
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
