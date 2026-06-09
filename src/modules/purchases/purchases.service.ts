@@ -4,6 +4,8 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { CreatePurchaseNoteDto } from './dto/create-purchase-note.dto';
 import { CreateAdjustmentDto } from './dto/create-adjustment.dto';
+import { UpdateLibroComprasDto } from './dto/update-libro-compras.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
 
 @Injectable()
 export class PurchasesService {
@@ -74,6 +76,16 @@ export class PurchasesService {
 
   async findAllLibroCompras() {
     return this.repository.findAllLibroCompras();
+  }
+
+  async createExpense(dto: CreateExpenseDto) {
+    return this.repository.createExpense(dto);
+  }
+
+  async updateLibroCompras(id: number, dto: UpdateLibroComprasDto) {
+    const entry = await this.repository.findLibroComprasById(id);
+    if (!entry) throw new NotFoundException(`Registro de libro de compras #${id} no encontrado.`);
+    return this.repository.updateLibroCompras(id, dto);
   }
 
   // ── Notas de Remisión ──

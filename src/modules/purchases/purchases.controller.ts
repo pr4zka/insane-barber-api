@@ -7,6 +7,8 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { CreatePurchaseNoteDto } from './dto/create-purchase-note.dto';
 import { CreateAdjustmentDto } from './dto/create-adjustment.dto';
+import { UpdateLibroComprasDto } from './dto/update-libro-compras.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
@@ -101,6 +103,24 @@ export class PurchasesController {
   @ApiOperation({ summary: 'Listar libro de compras' })
   async findAllLibroCompras() {
     return this.service.findAllLibroCompras();
+  }
+
+  @Post('ledger')
+  @Roles('administrador')
+  @ApiOperation({ summary: 'Registrar un gasto/servicio directo (sin orden ni stock)' })
+  @ApiResponse({ status: 201, description: 'Gasto registrado' })
+  async createExpense(@Body() dto: CreateExpenseDto) {
+    return this.service.createExpense(dto);
+  }
+
+  @Patch('ledger/:id')
+  @Roles('administrador')
+  @ApiOperation({ summary: 'Actualizar categoria/detalle de un registro del libro de compras' })
+  async updateLibroCompras(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateLibroComprasDto,
+  ) {
+    return this.service.updateLibroCompras(id, dto);
   }
 
   // ── Notas de Remisión ──

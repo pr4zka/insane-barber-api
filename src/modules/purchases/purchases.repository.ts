@@ -4,6 +4,9 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { CreatePurchaseNoteDto } from './dto/create-purchase-note.dto';
 import { CreateAdjustmentDto } from './dto/create-adjustment.dto';
+import { UpdateLibroComprasDto } from './dto/update-libro-compras.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
+import { categoriaLabel, calcularIva } from './categorias-compra';
 
 @Injectable()
 export class PurchasesRepository {
@@ -76,6 +79,13 @@ export class PurchasesRepository {
         data: {
           proveedorId: dto.proveedorId,
           observacion: dto.observacion ?? '',
+          categoria: dto.categoria ?? 'otros',
+          detalle: dto.detalle ?? '',
+          tipoComprobante: dto.tipoComprobante ?? 'factura',
+          nroComprobante: dto.nroComprobante ?? '',
+          timbrado: dto.timbrado ?? '',
+          condicion: dto.condicion ?? 'contado',
+          tasaIva: dto.tasaIva ?? 10,
           total,
           detalles: { create: detallesData },
         },
@@ -121,13 +131,27 @@ export class PurchasesRepository {
         });
       }
 
-      // Registrar en Libro de Compras
+      // Registrar en Libro de Compras (el concepto es la etiqueta de la categoria)
+      const iva = calcularIva(Number(orden.total), orden.tasaIva);
       await tx.libroCompras.create({
         data: {
           ordenCompraId: id,
-          concepto: `Compra a ${orden.proveedor.nombre}`,
+          concepto: categoriaLabel(orden.categoria),
+          categoria: orden.categoria,
+          detalle: orden.detalle,
           monto: orden.total,
           proveedor: orden.proveedor.nombre,
+          rucProveedor: orden.proveedor.ruc,
+          tipoComprobante: orden.tipoComprobante,
+          nroComprobante: orden.nroComprobante,
+          timbrado: orden.timbrado,
+          condicion: orden.condicion,
+          tasaIva: orden.tasaIva,
+          gravado10: iva.gravado10,
+          iva10: iva.iva10,
+          gravado5: iva.gravado5,
+          iva5: iva.iva5,
+          exento: iva.exento,
         },
       });
 
@@ -161,6 +185,77 @@ export class PurchasesRepository {
     return this.prisma.libroCompras.findMany({
       include: { ordenCompra: { include: { proveedor: true } } },
       orderBy: { fecha: 'desc' },
+    });
+  }
+
+  async findLibroComprasById(id: number) {
+    return this.prisma.libroCompras.findUnique({ where: { id } });
+  }
+
+  // Gasto / servicio directo (sin orden de compra ni movimiento de stock).
+  async createExpense(dto: CreateExpenseDto) {
+    const categoria = dto.categoria ?? 'otros';
+    const tasaIva = dto.tasaIva ?? 10;
+    const iva = calcularIva(dto.monto, tasaIva);
+
+    return this.prisma.libroCompras.create({
+      data: {
+        concepto: categoriaLabel(categoria),
+        categoria,
+        detalle: dto.detalle ?? '',
+        monto: dto.monto,
+        proveedor: dto.proveedor,
+        rucProveedor: dto.rucProveedor ?? '',
+        tipoComprobante: dto.tipoComprobante ?? 'factura',
+        nroComprobante: dto.nroComprobante ?? '',
+        timbrado: dto.timbrado ?? '',
+        condicion: dto.condicion ?? 'contado',
+        tasaIva,
+        gravado10: iva.gravado10,
+        iva10: iva.iva10,
+        gravado5: iva.gravado5,
+        iva5: iva.iva5,
+        exento: iva.exento,
+        ...(dto.fecha ? { fecha: new Date(dto.fecha) } : {}),
+      },
+      include: { ordenCompra: { include: { proveedor: true } } },
+    });
+  }
+
+  async updateLibroCompras(id: number, dto: UpdateLibroComprasDto) {
+    const actual = await this.prisma.libroCompras.findUnique({ where: { id } });
+    const categoria = dto.categoria ?? actual?.categoria ?? 'otros';
+    const tasaIva = dto.tasaIva ?? actual?.tasaIva ?? 10;
+
+    // Recalcular IVA si cambia la tasa (el monto no se edita aca).
+    const iva =
+      dto.tasaIva !== undefined && actual
+        ? calcularIva(Number(actual.monto), tasaIva)
+        : null;
+
+    return this.prisma.libroCompras.update({
+      where: { id },
+      data: {
+        categoria,
+        concepto: categoriaLabel(categoria),
+        tasaIva,
+        ...(dto.detalle !== undefined ? { detalle: dto.detalle } : {}),
+        ...(dto.tipoComprobante !== undefined ? { tipoComprobante: dto.tipoComprobante } : {}),
+        ...(dto.nroComprobante !== undefined ? { nroComprobante: dto.nroComprobante } : {}),
+        ...(dto.timbrado !== undefined ? { timbrado: dto.timbrado } : {}),
+        ...(dto.condicion !== undefined ? { condicion: dto.condicion } : {}),
+        ...(dto.rucProveedor !== undefined ? { rucProveedor: dto.rucProveedor } : {}),
+        ...(iva
+          ? {
+              gravado10: iva.gravado10,
+              iva10: iva.iva10,
+              gravado5: iva.gravado5,
+              iva5: iva.iva5,
+              exento: iva.exento,
+            }
+          : {}),
+      },
+      include: { ordenCompra: { include: { proveedor: true } } },
     });
   }
 
