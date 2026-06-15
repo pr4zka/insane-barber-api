@@ -115,7 +115,7 @@ export type BarberoGroupByOutputType = {
     _min: BarberoMinAggregateOutputType | null;
     _max: BarberoMaxAggregateOutputType | null;
 };
-type GetBarberoGroupByPayload<T extends BarberoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<BarberoGroupByOutputType, T['by']> & {
+export type GetBarberoGroupByPayload<T extends BarberoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<BarberoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof BarberoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], BarberoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], BarberoGroupByOutputType[P]>;
 }>>;
 export type BarberoWhereInput = {
@@ -669,4 +669,3 @@ export type BarberoDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
     omit?: Prisma.BarberoOmit<ExtArgs> | null;
     include?: Prisma.BarberoInclude<ExtArgs> | null;
 };
-export {};

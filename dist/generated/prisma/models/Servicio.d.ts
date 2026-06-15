@@ -119,7 +119,7 @@ export type ServicioGroupByOutputType = {
     _min: ServicioMinAggregateOutputType | null;
     _max: ServicioMaxAggregateOutputType | null;
 };
-type GetServicioGroupByPayload<T extends ServicioGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ServicioGroupByOutputType, T['by']> & {
+export type GetServicioGroupByPayload<T extends ServicioGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ServicioGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof ServicioGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], ServicioGroupByOutputType[P]> : Prisma.GetScalarType<T[P], ServicioGroupByOutputType[P]>;
 }>>;
 export type ServicioWhereInput = {
@@ -670,4 +670,3 @@ export type ServicioDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
     omit?: Prisma.ServicioOmit<ExtArgs> | null;
     include?: Prisma.ServicioInclude<ExtArgs> | null;
 };
-export {};

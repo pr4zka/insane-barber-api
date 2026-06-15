@@ -6,5 +6,12 @@ export declare class CreatePurchaseOrderDetailDto {
 export declare class CreatePurchaseOrderDto {
     proveedorId: number;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles: CreatePurchaseOrderDetailDto[];
 }

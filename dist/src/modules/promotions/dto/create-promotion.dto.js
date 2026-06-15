@@ -26,10 +26,23 @@ __decorate([
     __metadata("design:type", String)
 ], CreatePromotionDto.prototype, "descripcion", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Porcentaje de descuento', example: 20 }),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Tipo de promocion', enum: ['porcentaje', 'monto_fijo'], example: 'porcentaje' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsIn)(['porcentaje', 'monto_fijo']),
+    __metadata("design:type", String)
+], CreatePromotionDto.prototype, "tipo", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Porcentaje de descuento (si tipo = porcentaje)', example: 20 }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreatePromotionDto.prototype, "porcentaje", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Monto fijo en guaranies (si tipo = monto_fijo)', example: 5000 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreatePromotionDto.prototype, "monto", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Fecha de inicio (YYYY-MM-DD)', example: '2026-01-01' }),
     (0, class_validator_1.IsString)(),

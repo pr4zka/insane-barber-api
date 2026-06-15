@@ -118,7 +118,7 @@ export type ProveedorGroupByOutputType = {
     _min: ProveedorMinAggregateOutputType | null;
     _max: ProveedorMaxAggregateOutputType | null;
 };
-type GetProveedorGroupByPayload<T extends ProveedorGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ProveedorGroupByOutputType, T['by']> & {
+export type GetProveedorGroupByPayload<T extends ProveedorGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ProveedorGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof ProveedorGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], ProveedorGroupByOutputType[P]> : Prisma.GetScalarType<T[P], ProveedorGroupByOutputType[P]>;
 }>>;
 export type ProveedorWhereInput = {
@@ -593,4 +593,3 @@ export type ProveedorDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
     omit?: Prisma.ProveedorOmit<ExtArgs> | null;
     include?: Prisma.ProveedorInclude<ExtArgs> | null;
 };
-export {};

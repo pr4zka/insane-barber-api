@@ -11,60 +11,76 @@ export type AggregateDescuento = {
 export type DescuentoAvgAggregateOutputType = {
     id: number | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
 };
 export type DescuentoSumAggregateOutputType = {
     id: number | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
 };
 export type DescuentoMinAggregateOutputType = {
     id: number | null;
     nombre: string | null;
     descripcion: string | null;
+    tipo: string | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     estado: boolean | null;
 };
 export type DescuentoMaxAggregateOutputType = {
     id: number | null;
     nombre: string | null;
     descripcion: string | null;
+    tipo: string | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     estado: boolean | null;
 };
 export type DescuentoCountAggregateOutputType = {
     id: number;
     nombre: number;
     descripcion: number;
+    tipo: number;
     porcentaje: number;
+    monto: number;
     estado: number;
     _all: number;
 };
 export type DescuentoAvgAggregateInputType = {
     id?: true;
     porcentaje?: true;
+    monto?: true;
 };
 export type DescuentoSumAggregateInputType = {
     id?: true;
     porcentaje?: true;
+    monto?: true;
 };
 export type DescuentoMinAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     estado?: true;
 };
 export type DescuentoMaxAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     estado?: true;
 };
 export type DescuentoCountAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     estado?: true;
     _all?: true;
 };
@@ -100,7 +116,9 @@ export type DescuentoGroupByOutputType = {
     id: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal;
+    tipo: string;
+    porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     estado: boolean;
     _count: DescuentoCountAggregateOutputType | null;
     _avg: DescuentoAvgAggregateOutputType | null;
@@ -108,7 +126,7 @@ export type DescuentoGroupByOutputType = {
     _min: DescuentoMinAggregateOutputType | null;
     _max: DescuentoMaxAggregateOutputType | null;
 };
-type GetDescuentoGroupByPayload<T extends DescuentoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DescuentoGroupByOutputType, T['by']> & {
+export type GetDescuentoGroupByPayload<T extends DescuentoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DescuentoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof DescuentoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], DescuentoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], DescuentoGroupByOutputType[P]>;
 }>>;
 export type DescuentoWhereInput = {
@@ -118,7 +136,9 @@ export type DescuentoWhereInput = {
     id?: Prisma.IntFilter<"Descuento"> | number;
     nombre?: Prisma.StringFilter<"Descuento"> | string;
     descripcion?: Prisma.StringFilter<"Descuento"> | string;
-    porcentaje?: Prisma.DecimalFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFilter<"Descuento"> | string;
+    porcentaje?: Prisma.DecimalNullableFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFilter<"Descuento"> | boolean;
     pagos?: Prisma.PagoListRelationFilter;
 };
@@ -126,7 +146,9 @@ export type DescuentoOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
-    porcentaje?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
+    porcentaje?: Prisma.SortOrderInput | Prisma.SortOrder;
+    monto?: Prisma.SortOrderInput | Prisma.SortOrder;
     estado?: Prisma.SortOrder;
     pagos?: Prisma.PagoOrderByRelationAggregateInput;
 };
@@ -137,7 +159,9 @@ export type DescuentoWhereUniqueInput = Prisma.AtLeast<{
     NOT?: Prisma.DescuentoWhereInput | Prisma.DescuentoWhereInput[];
     nombre?: Prisma.StringFilter<"Descuento"> | string;
     descripcion?: Prisma.StringFilter<"Descuento"> | string;
-    porcentaje?: Prisma.DecimalFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFilter<"Descuento"> | string;
+    porcentaje?: Prisma.DecimalNullableFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFilter<"Descuento"> | boolean;
     pagos?: Prisma.PagoListRelationFilter;
 }, "id">;
@@ -145,7 +169,9 @@ export type DescuentoOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
-    porcentaje?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
+    porcentaje?: Prisma.SortOrderInput | Prisma.SortOrder;
+    monto?: Prisma.SortOrderInput | Prisma.SortOrder;
     estado?: Prisma.SortOrder;
     _count?: Prisma.DescuentoCountOrderByAggregateInput;
     _avg?: Prisma.DescuentoAvgOrderByAggregateInput;
@@ -160,13 +186,17 @@ export type DescuentoScalarWhereWithAggregatesInput = {
     id?: Prisma.IntWithAggregatesFilter<"Descuento"> | number;
     nombre?: Prisma.StringWithAggregatesFilter<"Descuento"> | string;
     descripcion?: Prisma.StringWithAggregatesFilter<"Descuento"> | string;
-    porcentaje?: Prisma.DecimalWithAggregatesFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringWithAggregatesFilter<"Descuento"> | string;
+    porcentaje?: Prisma.DecimalNullableWithAggregatesFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableWithAggregatesFilter<"Descuento"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolWithAggregatesFilter<"Descuento"> | boolean;
 };
 export type DescuentoCreateInput = {
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: boolean;
     pagos?: Prisma.PagoCreateNestedManyWithoutDescuentoInput;
 };
@@ -174,14 +204,18 @@ export type DescuentoUncheckedCreateInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: boolean;
     pagos?: Prisma.PagoUncheckedCreateNestedManyWithoutDescuentoInput;
 };
 export type DescuentoUpdateInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     pagos?: Prisma.PagoUpdateManyWithoutDescuentoNestedInput;
 };
@@ -189,7 +223,9 @@ export type DescuentoUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     pagos?: Prisma.PagoUncheckedUpdateManyWithoutDescuentoNestedInput;
 };
@@ -197,50 +233,64 @@ export type DescuentoCreateManyInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: boolean;
 };
 export type DescuentoUpdateManyMutationInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
 };
 export type DescuentoUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
 };
 export type DescuentoCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
 };
 export type DescuentoAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
 };
 export type DescuentoMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
 };
 export type DescuentoMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
 };
 export type DescuentoSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
 };
 export type DescuentoNullableScalarRelationFilter = {
     is?: Prisma.DescuentoWhereInput | null;
@@ -263,14 +313,18 @@ export type DescuentoUpdateOneWithoutPagosNestedInput = {
 export type DescuentoCreateWithoutPagosInput = {
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: boolean;
 };
 export type DescuentoUncheckedCreateWithoutPagosInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: boolean;
 };
 export type DescuentoCreateOrConnectWithoutPagosInput = {
@@ -289,14 +343,18 @@ export type DescuentoUpdateToOneWithWhereWithoutPagosInput = {
 export type DescuentoUpdateWithoutPagosInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
 };
 export type DescuentoUncheckedUpdateWithoutPagosInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
 };
 export type DescuentoCountOutputType = {
@@ -315,7 +373,9 @@ export type DescuentoSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     estado?: boolean;
     pagos?: boolean | Prisma.Descuento$pagosArgs<ExtArgs>;
     _count?: boolean | Prisma.DescuentoCountOutputTypeDefaultArgs<ExtArgs>;
@@ -324,24 +384,30 @@ export type DescuentoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     estado?: boolean;
 }, ExtArgs["result"]["descuento"]>;
 export type DescuentoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     estado?: boolean;
 }, ExtArgs["result"]["descuento"]>;
 export type DescuentoSelectScalar = {
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     estado?: boolean;
 };
-export type DescuentoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "porcentaje" | "estado", ExtArgs["result"]["descuento"]>;
+export type DescuentoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "tipo" | "porcentaje" | "monto" | "estado", ExtArgs["result"]["descuento"]>;
 export type DescuentoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     pagos?: boolean | Prisma.Descuento$pagosArgs<ExtArgs>;
     _count?: boolean | Prisma.DescuentoCountOutputTypeDefaultArgs<ExtArgs>;
@@ -357,7 +423,9 @@ export type $DescuentoPayload<ExtArgs extends runtime.Types.Extensions.InternalA
         id: number;
         nombre: string;
         descripcion: string;
-        porcentaje: runtime.Decimal;
+        tipo: string;
+        porcentaje: runtime.Decimal | null;
+        monto: runtime.Decimal | null;
         estado: boolean;
     }, ExtArgs["result"]["descuento"]>;
     composites: {};
@@ -420,7 +488,9 @@ export interface DescuentoFieldRefs {
     readonly id: Prisma.FieldRef<"Descuento", 'Int'>;
     readonly nombre: Prisma.FieldRef<"Descuento", 'String'>;
     readonly descripcion: Prisma.FieldRef<"Descuento", 'String'>;
+    readonly tipo: Prisma.FieldRef<"Descuento", 'String'>;
     readonly porcentaje: Prisma.FieldRef<"Descuento", 'Decimal'>;
+    readonly monto: Prisma.FieldRef<"Descuento", 'Decimal'>;
     readonly estado: Prisma.FieldRef<"Descuento", 'Boolean'>;
 }
 export type DescuentoFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -537,4 +607,3 @@ export type DescuentoDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
     omit?: Prisma.DescuentoOmit<ExtArgs> | null;
     include?: Prisma.DescuentoInclude<ExtArgs> | null;
 };
-export {};

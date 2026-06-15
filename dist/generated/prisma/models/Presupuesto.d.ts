@@ -119,7 +119,7 @@ export type PresupuestoGroupByOutputType = {
     _min: PresupuestoMinAggregateOutputType | null;
     _max: PresupuestoMaxAggregateOutputType | null;
 };
-type GetPresupuestoGroupByPayload<T extends PresupuestoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PresupuestoGroupByOutputType, T['by']> & {
+export type GetPresupuestoGroupByPayload<T extends PresupuestoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PresupuestoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof PresupuestoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], PresupuestoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], PresupuestoGroupByOutputType[P]>;
 }>>;
 export type PresupuestoWhereInput = {
@@ -709,4 +709,3 @@ export type PresupuestoDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inte
     omit?: Prisma.PresupuestoOmit<ExtArgs> | null;
     include?: Prisma.PresupuestoInclude<ExtArgs> | null;
 };
-export {};

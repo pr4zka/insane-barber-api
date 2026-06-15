@@ -126,7 +126,7 @@ export type NotaCreditoDebitoGroupByOutputType = {
     _min: NotaCreditoDebitoMinAggregateOutputType | null;
     _max: NotaCreditoDebitoMaxAggregateOutputType | null;
 };
-type GetNotaCreditoDebitoGroupByPayload<T extends NotaCreditoDebitoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaCreditoDebitoGroupByOutputType, T['by']> & {
+export type GetNotaCreditoDebitoGroupByPayload<T extends NotaCreditoDebitoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaCreditoDebitoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof NotaCreditoDebitoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], NotaCreditoDebitoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], NotaCreditoDebitoGroupByOutputType[P]>;
 }>>;
 export type NotaCreditoDebitoWhereInput = {
@@ -645,4 +645,3 @@ export type NotaCreditoDebitoDefaultArgs<ExtArgs extends runtime.Types.Extension
     omit?: Prisma.NotaCreditoDebitoOmit<ExtArgs> | null;
     include?: Prisma.NotaCreditoDebitoInclude<ExtArgs> | null;
 };
-export {};

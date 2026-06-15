@@ -130,7 +130,7 @@ export type CajaGroupByOutputType = {
     _min: CajaMinAggregateOutputType | null;
     _max: CajaMaxAggregateOutputType | null;
 };
-type GetCajaGroupByPayload<T extends CajaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<CajaGroupByOutputType, T['by']> & {
+export type GetCajaGroupByPayload<T extends CajaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<CajaGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof CajaGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], CajaGroupByOutputType[P]> : Prisma.GetScalarType<T[P], CajaGroupByOutputType[P]>;
 }>>;
 export type CajaWhereInput = {
@@ -352,13 +352,6 @@ export type CajaUncheckedUpdateManyWithoutUsuarioNestedInput = {
 };
 export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null;
-};
-export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-    increment?: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
 };
 export type CajaCreateNestedOneWithoutMovimientosInput = {
     create?: Prisma.XOR<Prisma.CajaCreateWithoutMovimientosInput, Prisma.CajaUncheckedCreateWithoutMovimientosInput>;
@@ -764,4 +757,3 @@ export type CajaDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
     omit?: Prisma.CajaOmit<ExtArgs> | null;
     include?: Prisma.CajaInclude<ExtArgs> | null;
 };
-export {};

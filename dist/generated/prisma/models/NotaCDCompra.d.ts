@@ -126,7 +126,7 @@ export type NotaCDCompraGroupByOutputType = {
     _min: NotaCDCompraMinAggregateOutputType | null;
     _max: NotaCDCompraMaxAggregateOutputType | null;
 };
-type GetNotaCDCompraGroupByPayload<T extends NotaCDCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaCDCompraGroupByOutputType, T['by']> & {
+export type GetNotaCDCompraGroupByPayload<T extends NotaCDCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaCDCompraGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof NotaCDCompraGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], NotaCDCompraGroupByOutputType[P]> : Prisma.GetScalarType<T[P], NotaCDCompraGroupByOutputType[P]>;
 }>>;
 export type NotaCDCompraWhereInput = {
@@ -645,4 +645,3 @@ export type NotaCDCompraDefaultArgs<ExtArgs extends runtime.Types.Extensions.Int
     omit?: Prisma.NotaCDCompraOmit<ExtArgs> | null;
     include?: Prisma.NotaCDCompraInclude<ExtArgs> | null;
 };
-export {};

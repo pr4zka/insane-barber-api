@@ -11,16 +11,20 @@ export type AggregatePromocion = {
 export type PromocionAvgAggregateOutputType = {
     id: number | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
 };
 export type PromocionSumAggregateOutputType = {
     id: number | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
 };
 export type PromocionMinAggregateOutputType = {
     id: number | null;
     nombre: string | null;
     descripcion: string | null;
+    tipo: string | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     fechaInicio: Date | null;
     fechaFin: Date | null;
     estado: boolean | null;
@@ -29,7 +33,9 @@ export type PromocionMaxAggregateOutputType = {
     id: number | null;
     nombre: string | null;
     descripcion: string | null;
+    tipo: string | null;
     porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     fechaInicio: Date | null;
     fechaFin: Date | null;
     estado: boolean | null;
@@ -38,7 +44,9 @@ export type PromocionCountAggregateOutputType = {
     id: number;
     nombre: number;
     descripcion: number;
+    tipo: number;
     porcentaje: number;
+    monto: number;
     fechaInicio: number;
     fechaFin: number;
     estado: number;
@@ -47,16 +55,20 @@ export type PromocionCountAggregateOutputType = {
 export type PromocionAvgAggregateInputType = {
     id?: true;
     porcentaje?: true;
+    monto?: true;
 };
 export type PromocionSumAggregateInputType = {
     id?: true;
     porcentaje?: true;
+    monto?: true;
 };
 export type PromocionMinAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     fechaInicio?: true;
     fechaFin?: true;
     estado?: true;
@@ -65,7 +77,9 @@ export type PromocionMaxAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     fechaInicio?: true;
     fechaFin?: true;
     estado?: true;
@@ -74,7 +88,9 @@ export type PromocionCountAggregateInputType = {
     id?: true;
     nombre?: true;
     descripcion?: true;
+    tipo?: true;
     porcentaje?: true;
+    monto?: true;
     fechaInicio?: true;
     fechaFin?: true;
     estado?: true;
@@ -112,7 +128,9 @@ export type PromocionGroupByOutputType = {
     id: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal;
+    tipo: string;
+    porcentaje: runtime.Decimal | null;
+    monto: runtime.Decimal | null;
     fechaInicio: Date;
     fechaFin: Date;
     estado: boolean;
@@ -122,7 +140,7 @@ export type PromocionGroupByOutputType = {
     _min: PromocionMinAggregateOutputType | null;
     _max: PromocionMaxAggregateOutputType | null;
 };
-type GetPromocionGroupByPayload<T extends PromocionGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PromocionGroupByOutputType, T['by']> & {
+export type GetPromocionGroupByPayload<T extends PromocionGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PromocionGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof PromocionGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], PromocionGroupByOutputType[P]> : Prisma.GetScalarType<T[P], PromocionGroupByOutputType[P]>;
 }>>;
 export type PromocionWhereInput = {
@@ -132,7 +150,9 @@ export type PromocionWhereInput = {
     id?: Prisma.IntFilter<"Promocion"> | number;
     nombre?: Prisma.StringFilter<"Promocion"> | string;
     descripcion?: Prisma.StringFilter<"Promocion"> | string;
-    porcentaje?: Prisma.DecimalFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFilter<"Promocion"> | string;
+    porcentaje?: Prisma.DecimalNullableFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFilter<"Promocion"> | Date | string;
     fechaFin?: Prisma.DateTimeFilter<"Promocion"> | Date | string;
     estado?: Prisma.BoolFilter<"Promocion"> | boolean;
@@ -142,7 +162,9 @@ export type PromocionOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
-    porcentaje?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
+    porcentaje?: Prisma.SortOrderInput | Prisma.SortOrder;
+    monto?: Prisma.SortOrderInput | Prisma.SortOrder;
     fechaInicio?: Prisma.SortOrder;
     fechaFin?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
@@ -155,7 +177,9 @@ export type PromocionWhereUniqueInput = Prisma.AtLeast<{
     NOT?: Prisma.PromocionWhereInput | Prisma.PromocionWhereInput[];
     nombre?: Prisma.StringFilter<"Promocion"> | string;
     descripcion?: Prisma.StringFilter<"Promocion"> | string;
-    porcentaje?: Prisma.DecimalFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFilter<"Promocion"> | string;
+    porcentaje?: Prisma.DecimalNullableFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFilter<"Promocion"> | Date | string;
     fechaFin?: Prisma.DateTimeFilter<"Promocion"> | Date | string;
     estado?: Prisma.BoolFilter<"Promocion"> | boolean;
@@ -165,7 +189,9 @@ export type PromocionOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
-    porcentaje?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
+    porcentaje?: Prisma.SortOrderInput | Prisma.SortOrder;
+    monto?: Prisma.SortOrderInput | Prisma.SortOrder;
     fechaInicio?: Prisma.SortOrder;
     fechaFin?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
@@ -182,7 +208,9 @@ export type PromocionScalarWhereWithAggregatesInput = {
     id?: Prisma.IntWithAggregatesFilter<"Promocion"> | number;
     nombre?: Prisma.StringWithAggregatesFilter<"Promocion"> | string;
     descripcion?: Prisma.StringWithAggregatesFilter<"Promocion"> | string;
-    porcentaje?: Prisma.DecimalWithAggregatesFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringWithAggregatesFilter<"Promocion"> | string;
+    porcentaje?: Prisma.DecimalNullableWithAggregatesFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.DecimalNullableWithAggregatesFilter<"Promocion"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeWithAggregatesFilter<"Promocion"> | Date | string;
     fechaFin?: Prisma.DateTimeWithAggregatesFilter<"Promocion"> | Date | string;
     estado?: Prisma.BoolWithAggregatesFilter<"Promocion"> | boolean;
@@ -190,7 +218,9 @@ export type PromocionScalarWhereWithAggregatesInput = {
 export type PromocionCreateInput = {
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio: Date | string;
     fechaFin: Date | string;
     estado?: boolean;
@@ -200,7 +230,9 @@ export type PromocionUncheckedCreateInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio: Date | string;
     fechaFin: Date | string;
     estado?: boolean;
@@ -209,7 +241,9 @@ export type PromocionUncheckedCreateInput = {
 export type PromocionUpdateInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -219,7 +253,9 @@ export type PromocionUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -229,7 +265,9 @@ export type PromocionCreateManyInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio: Date | string;
     fechaFin: Date | string;
     estado?: boolean;
@@ -237,7 +275,9 @@ export type PromocionCreateManyInput = {
 export type PromocionUpdateManyMutationInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -246,7 +286,9 @@ export type PromocionUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -255,7 +297,9 @@ export type PromocionCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     fechaInicio?: Prisma.SortOrder;
     fechaFin?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
@@ -263,12 +307,15 @@ export type PromocionCountOrderByAggregateInput = {
 export type PromocionAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
 };
 export type PromocionMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     fechaInicio?: Prisma.SortOrder;
     fechaFin?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
@@ -277,7 +324,9 @@ export type PromocionMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     descripcion?: Prisma.SortOrder;
+    tipo?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
     fechaInicio?: Prisma.SortOrder;
     fechaFin?: Prisma.SortOrder;
     estado?: Prisma.SortOrder;
@@ -285,10 +334,18 @@ export type PromocionMinOrderByAggregateInput = {
 export type PromocionSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     porcentaje?: Prisma.SortOrder;
+    monto?: Prisma.SortOrder;
 };
 export type PromocionNullableScalarRelationFilter = {
     is?: Prisma.PromocionWhereInput | null;
     isNot?: Prisma.PromocionWhereInput | null;
+};
+export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    increment?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
 };
 export type PromocionCreateNestedOneWithoutPagosInput = {
     create?: Prisma.XOR<Prisma.PromocionCreateWithoutPagosInput, Prisma.PromocionUncheckedCreateWithoutPagosInput>;
@@ -307,7 +364,9 @@ export type PromocionUpdateOneWithoutPagosNestedInput = {
 export type PromocionCreateWithoutPagosInput = {
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio: Date | string;
     fechaFin: Date | string;
     estado?: boolean;
@@ -316,7 +375,9 @@ export type PromocionUncheckedCreateWithoutPagosInput = {
     id?: number;
     nombre: string;
     descripcion: string;
-    porcentaje: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: string;
+    porcentaje?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio: Date | string;
     fechaFin: Date | string;
     estado?: boolean;
@@ -337,7 +398,9 @@ export type PromocionUpdateToOneWithWhereWithoutPagosInput = {
 export type PromocionUpdateWithoutPagosInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -346,7 +409,9 @@ export type PromocionUncheckedUpdateWithoutPagosInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
-    porcentaje?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    tipo?: Prisma.StringFieldUpdateOperationsInput | string;
+    porcentaje?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    monto?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     fechaInicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fechaFin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -367,7 +432,9 @@ export type PromocionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     fechaInicio?: boolean;
     fechaFin?: boolean;
     estado?: boolean;
@@ -378,7 +445,9 @@ export type PromocionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     fechaInicio?: boolean;
     fechaFin?: boolean;
     estado?: boolean;
@@ -387,7 +456,9 @@ export type PromocionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     fechaInicio?: boolean;
     fechaFin?: boolean;
     estado?: boolean;
@@ -396,12 +467,14 @@ export type PromocionSelectScalar = {
     id?: boolean;
     nombre?: boolean;
     descripcion?: boolean;
+    tipo?: boolean;
     porcentaje?: boolean;
+    monto?: boolean;
     fechaInicio?: boolean;
     fechaFin?: boolean;
     estado?: boolean;
 };
-export type PromocionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "porcentaje" | "fechaInicio" | "fechaFin" | "estado", ExtArgs["result"]["promocion"]>;
+export type PromocionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "tipo" | "porcentaje" | "monto" | "fechaInicio" | "fechaFin" | "estado", ExtArgs["result"]["promocion"]>;
 export type PromocionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     pagos?: boolean | Prisma.Promocion$pagosArgs<ExtArgs>;
     _count?: boolean | Prisma.PromocionCountOutputTypeDefaultArgs<ExtArgs>;
@@ -417,7 +490,9 @@ export type $PromocionPayload<ExtArgs extends runtime.Types.Extensions.InternalA
         id: number;
         nombre: string;
         descripcion: string;
-        porcentaje: runtime.Decimal;
+        tipo: string;
+        porcentaje: runtime.Decimal | null;
+        monto: runtime.Decimal | null;
         fechaInicio: Date;
         fechaFin: Date;
         estado: boolean;
@@ -482,7 +557,9 @@ export interface PromocionFieldRefs {
     readonly id: Prisma.FieldRef<"Promocion", 'Int'>;
     readonly nombre: Prisma.FieldRef<"Promocion", 'String'>;
     readonly descripcion: Prisma.FieldRef<"Promocion", 'String'>;
+    readonly tipo: Prisma.FieldRef<"Promocion", 'String'>;
     readonly porcentaje: Prisma.FieldRef<"Promocion", 'Decimal'>;
+    readonly monto: Prisma.FieldRef<"Promocion", 'Decimal'>;
     readonly fechaInicio: Prisma.FieldRef<"Promocion", 'DateTime'>;
     readonly fechaFin: Prisma.FieldRef<"Promocion", 'DateTime'>;
     readonly estado: Prisma.FieldRef<"Promocion", 'Boolean'>;
@@ -601,4 +678,3 @@ export type PromocionDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
     omit?: Prisma.PromocionOmit<ExtArgs> | null;
     include?: Prisma.PromocionInclude<ExtArgs> | null;
 };
-export {};

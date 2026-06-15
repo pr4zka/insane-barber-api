@@ -20,8 +20,16 @@ let DiscountsRepository = class DiscountsRepository {
         return this.prisma.descuento.findMany();
     }
     async create(data) {
+        const tipo = data.tipo ?? 'porcentaje';
         return this.prisma.descuento.create({
-            data,
+            data: {
+                nombre: data.nombre,
+                descripcion: data.descripcion,
+                tipo,
+                porcentaje: tipo === 'porcentaje' ? data.porcentaje : null,
+                monto: tipo === 'monto_fijo' ? data.monto : null,
+                estado: data.estado,
+            },
         });
     }
 };

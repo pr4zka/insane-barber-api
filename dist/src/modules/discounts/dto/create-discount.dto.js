@@ -26,10 +26,23 @@ __decorate([
     __metadata("design:type", String)
 ], CreateDiscountDto.prototype, "descripcion", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Porcentaje de descuento', example: 15 }),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Tipo de descuento', enum: ['porcentaje', 'monto_fijo'], example: 'porcentaje' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsIn)(['porcentaje', 'monto_fijo']),
+    __metadata("design:type", String)
+], CreateDiscountDto.prototype, "tipo", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Porcentaje de descuento (si tipo = porcentaje)', example: 15 }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateDiscountDto.prototype, "porcentaje", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Monto fijo en guaranies (si tipo = monto_fijo)', example: 5000 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateDiscountDto.prototype, "monto", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Estado activo/inactivo del descuento', example: true }),
     (0, class_validator_1.IsOptional)(),

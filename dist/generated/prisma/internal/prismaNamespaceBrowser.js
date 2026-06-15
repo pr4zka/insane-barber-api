@@ -95,7 +95,9 @@ exports.PromocionScalarFieldEnum = {
     id: 'id',
     nombre: 'nombre',
     descripcion: 'descripcion',
+    tipo: 'tipo',
     porcentaje: 'porcentaje',
+    monto: 'monto',
     fechaInicio: 'fechaInicio',
     fechaFin: 'fechaFin',
     estado: 'estado'
@@ -104,7 +106,9 @@ exports.DescuentoScalarFieldEnum = {
     id: 'id',
     nombre: 'nombre',
     descripcion: 'descripcion',
+    tipo: 'tipo',
     porcentaje: 'porcentaje',
+    monto: 'monto',
     estado: 'estado'
 };
 exports.ReclamoScalarFieldEnum = {
@@ -221,7 +225,14 @@ exports.OrdenCompraScalarFieldEnum = {
     fecha: 'fecha',
     estado: 'estado',
     total: 'total',
-    observacion: 'observacion'
+    observacion: 'observacion',
+    categoria: 'categoria',
+    detalle: 'detalle',
+    tipoComprobante: 'tipoComprobante',
+    nroComprobante: 'nroComprobante',
+    timbrado: 'timbrado',
+    condicion: 'condicion',
+    tasaIva: 'tasaIva'
 };
 exports.DetalleOrdenCompraScalarFieldEnum = {
     id: 'id',
@@ -236,8 +247,21 @@ exports.LibroComprasScalarFieldEnum = {
     ordenCompraId: 'ordenCompraId',
     fecha: 'fecha',
     concepto: 'concepto',
+    categoria: 'categoria',
+    detalle: 'detalle',
     monto: 'monto',
-    proveedor: 'proveedor'
+    proveedor: 'proveedor',
+    rucProveedor: 'rucProveedor',
+    tipoComprobante: 'tipoComprobante',
+    nroComprobante: 'nroComprobante',
+    timbrado: 'timbrado',
+    condicion: 'condicion',
+    tasaIva: 'tasaIva',
+    gravado10: 'gravado10',
+    iva10: 'iva10',
+    gravado5: 'gravado5',
+    iva5: 'iva5',
+    exento: 'exento'
 };
 exports.NotaRemisionScalarFieldEnum = {
     id: 'id',

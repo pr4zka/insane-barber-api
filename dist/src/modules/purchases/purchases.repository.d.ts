@@ -3,6 +3,8 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { CreatePurchaseNoteDto } from './dto/create-purchase-note.dto';
 import { CreateAdjustmentDto } from './dto/create-adjustment.dto';
+import { UpdateLibroComprasDto } from './dto/update-libro-compras.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
 export declare class PurchasesRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -18,6 +20,9 @@ export declare class PurchasesRepository {
     cancelOrder(id: number): Promise<any>;
     receiveOrder(id: number): Promise<any>;
     findAllLibroCompras(): Promise<any>;
+    findLibroComprasById(id: number): Promise<any>;
+    createExpense(dto: CreateExpenseDto): Promise<any>;
+    updateLibroCompras(id: number, dto: UpdateLibroComprasDto): Promise<any>;
     findAllNotasRemision(): Promise<any>;
     findAllNotasCD(): Promise<any>;
     createNotaCD(dto: CreatePurchaseNoteDto): Promise<any>;

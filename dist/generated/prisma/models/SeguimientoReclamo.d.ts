@@ -115,7 +115,7 @@ export type SeguimientoReclamoGroupByOutputType = {
     _min: SeguimientoReclamoMinAggregateOutputType | null;
     _max: SeguimientoReclamoMaxAggregateOutputType | null;
 };
-type GetSeguimientoReclamoGroupByPayload<T extends SeguimientoReclamoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<SeguimientoReclamoGroupByOutputType, T['by']> & {
+export type GetSeguimientoReclamoGroupByPayload<T extends SeguimientoReclamoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<SeguimientoReclamoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof SeguimientoReclamoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], SeguimientoReclamoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], SeguimientoReclamoGroupByOutputType[P]>;
 }>>;
 export type SeguimientoReclamoWhereInput = {
@@ -604,4 +604,3 @@ export type SeguimientoReclamoDefaultArgs<ExtArgs extends runtime.Types.Extensio
     omit?: Prisma.SeguimientoReclamoOmit<ExtArgs> | null;
     include?: Prisma.SeguimientoReclamoInclude<ExtArgs> | null;
 };
-export {};

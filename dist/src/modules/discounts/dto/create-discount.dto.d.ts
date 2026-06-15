@@ -1,6 +1,8 @@
 export declare class CreateDiscountDto {
     nombre: string;
     descripcion: string;
-    porcentaje: number;
+    tipo?: string;
+    porcentaje?: number;
+    monto?: number;
     estado?: boolean;
 }

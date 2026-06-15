@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PurchasesRepository = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const categorias_compra_1 = require("./categorias-compra");
 let PurchasesRepository = class PurchasesRepository {
     constructor(prisma) {
         this.prisma = prisma;
@@ -70,6 +71,13 @@ let PurchasesRepository = class PurchasesRepository {
                 data: {
                     proveedorId: dto.proveedorId,
                     observacion: dto.observacion ?? '',
+                    categoria: dto.categoria ?? 'otros',
+                    detalle: dto.detalle ?? '',
+                    tipoComprobante: dto.tipoComprobante ?? 'factura',
+                    nroComprobante: dto.nroComprobante ?? '',
+                    timbrado: dto.timbrado ?? '',
+                    condicion: dto.condicion ?? 'contado',
+                    tasaIva: dto.tasaIva ?? 10,
                     total,
                     detalles: { create: detallesData },
                 },
@@ -109,12 +117,26 @@ let PurchasesRepository = class PurchasesRepository {
                     },
                 });
             }
+            const iva = (0, categorias_compra_1.calcularIva)(Number(orden.total), orden.tasaIva);
             await tx.libroCompras.create({
                 data: {
                     ordenCompraId: id,
-                    concepto: `Compra a ${orden.proveedor.nombre}`,
+                    concepto: (0, categorias_compra_1.categoriaLabel)(orden.categoria),
+                    categoria: orden.categoria,
+                    detalle: orden.detalle,
                     monto: orden.total,
                     proveedor: orden.proveedor.nombre,
+                    rucProveedor: orden.proveedor.ruc,
+                    tipoComprobante: orden.tipoComprobante,
+                    nroComprobante: orden.nroComprobante,
+                    timbrado: orden.timbrado,
+                    condicion: orden.condicion,
+                    tasaIva: orden.tasaIva,
+                    gravado10: iva.gravado10,
+                    iva10: iva.iva10,
+                    gravado5: iva.gravado5,
+                    iva5: iva.iva5,
+                    exento: iva.exento,
                 },
             });
             await tx.notaRemision.create({
@@ -141,6 +163,68 @@ let PurchasesRepository = class PurchasesRepository {
         return this.prisma.libroCompras.findMany({
             include: { ordenCompra: { include: { proveedor: true } } },
             orderBy: { fecha: 'desc' },
+        });
+    }
+    async findLibroComprasById(id) {
+        return this.prisma.libroCompras.findUnique({ where: { id } });
+    }
+    async createExpense(dto) {
+        const categoria = dto.categoria ?? 'otros';
+        const tasaIva = dto.tasaIva ?? 10;
+        const iva = (0, categorias_compra_1.calcularIva)(dto.monto, tasaIva);
+        return this.prisma.libroCompras.create({
+            data: {
+                concepto: (0, categorias_compra_1.categoriaLabel)(categoria),
+                categoria,
+                detalle: dto.detalle ?? '',
+                monto: dto.monto,
+                proveedor: dto.proveedor,
+                rucProveedor: dto.rucProveedor ?? '',
+                tipoComprobante: dto.tipoComprobante ?? 'factura',
+                nroComprobante: dto.nroComprobante ?? '',
+                timbrado: dto.timbrado ?? '',
+                condicion: dto.condicion ?? 'contado',
+                tasaIva,
+                gravado10: iva.gravado10,
+                iva10: iva.iva10,
+                gravado5: iva.gravado5,
+                iva5: iva.iva5,
+                exento: iva.exento,
+                ...(dto.fecha ? { fecha: new Date(dto.fecha) } : {}),
+            },
+            include: { ordenCompra: { include: { proveedor: true } } },
+        });
+    }
+    async updateLibroCompras(id, dto) {
+        const actual = await this.prisma.libroCompras.findUnique({ where: { id } });
+        const categoria = dto.categoria ?? actual?.categoria ?? 'otros';
+        const tasaIva = dto.tasaIva ?? actual?.tasaIva ?? 10;
+        const iva = dto.tasaIva !== undefined && actual
+            ? (0, categorias_compra_1.calcularIva)(Number(actual.monto), tasaIva)
+            : null;
+        return this.prisma.libroCompras.update({
+            where: { id },
+            data: {
+                categoria,
+                concepto: (0, categorias_compra_1.categoriaLabel)(categoria),
+                tasaIva,
+                ...(dto.detalle !== undefined ? { detalle: dto.detalle } : {}),
+                ...(dto.tipoComprobante !== undefined ? { tipoComprobante: dto.tipoComprobante } : {}),
+                ...(dto.nroComprobante !== undefined ? { nroComprobante: dto.nroComprobante } : {}),
+                ...(dto.timbrado !== undefined ? { timbrado: dto.timbrado } : {}),
+                ...(dto.condicion !== undefined ? { condicion: dto.condicion } : {}),
+                ...(dto.rucProveedor !== undefined ? { rucProveedor: dto.rucProveedor } : {}),
+                ...(iva
+                    ? {
+                        gravado10: iva.gravado10,
+                        iva10: iva.iva10,
+                        gravado5: iva.gravado5,
+                        iva5: iva.iva5,
+                        exento: iva.exento,
+                    }
+                    : {}),
+            },
+            include: { ordenCompra: { include: { proveedor: true } } },
         });
     }
     async findAllNotasRemision() {

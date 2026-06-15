@@ -116,7 +116,7 @@ export type InsumoUtilizadoGroupByOutputType = {
     _min: InsumoUtilizadoMinAggregateOutputType | null;
     _max: InsumoUtilizadoMaxAggregateOutputType | null;
 };
-type GetInsumoUtilizadoGroupByPayload<T extends InsumoUtilizadoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<InsumoUtilizadoGroupByOutputType, T['by']> & {
+export type GetInsumoUtilizadoGroupByPayload<T extends InsumoUtilizadoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<InsumoUtilizadoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof InsumoUtilizadoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], InsumoUtilizadoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], InsumoUtilizadoGroupByOutputType[P]>;
 }>>;
 export type InsumoUtilizadoWhereInput = {
@@ -684,4 +684,3 @@ export type InsumoUtilizadoDefaultArgs<ExtArgs extends runtime.Types.Extensions.
     omit?: Prisma.InsumoUtilizadoOmit<ExtArgs> | null;
     include?: Prisma.InsumoUtilizadoInclude<ExtArgs> | null;
 };
-export {};

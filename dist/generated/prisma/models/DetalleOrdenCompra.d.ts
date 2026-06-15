@@ -131,7 +131,7 @@ export type DetalleOrdenCompraGroupByOutputType = {
     _min: DetalleOrdenCompraMinAggregateOutputType | null;
     _max: DetalleOrdenCompraMaxAggregateOutputType | null;
 };
-type GetDetalleOrdenCompraGroupByPayload<T extends DetalleOrdenCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DetalleOrdenCompraGroupByOutputType, T['by']> & {
+export type GetDetalleOrdenCompraGroupByPayload<T extends DetalleOrdenCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DetalleOrdenCompraGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof DetalleOrdenCompraGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], DetalleOrdenCompraGroupByOutputType[P]> : Prisma.GetScalarType<T[P], DetalleOrdenCompraGroupByOutputType[P]>;
 }>>;
 export type DetalleOrdenCompraWhereInput = {
@@ -737,4 +737,3 @@ export type DetalleOrdenCompraDefaultArgs<ExtArgs extends runtime.Types.Extensio
     omit?: Prisma.DetalleOrdenCompraOmit<ExtArgs> | null;
     include?: Prisma.DetalleOrdenCompraInclude<ExtArgs> | null;
 };
-export {};

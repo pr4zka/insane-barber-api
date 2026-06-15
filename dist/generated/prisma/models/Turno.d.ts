@@ -137,7 +137,7 @@ export type TurnoGroupByOutputType = {
     _min: TurnoMinAggregateOutputType | null;
     _max: TurnoMaxAggregateOutputType | null;
 };
-type GetTurnoGroupByPayload<T extends TurnoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<TurnoGroupByOutputType, T['by']> & {
+export type GetTurnoGroupByPayload<T extends TurnoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<TurnoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof TurnoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], TurnoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], TurnoGroupByOutputType[P]>;
 }>>;
 export type TurnoWhereInput = {
@@ -1251,4 +1251,3 @@ export type TurnoDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
     omit?: Prisma.TurnoOmit<ExtArgs> | null;
     include?: Prisma.TurnoInclude<ExtArgs> | null;
 };
-export {};

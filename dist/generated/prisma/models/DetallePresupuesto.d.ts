@@ -131,7 +131,7 @@ export type DetallePresupuestoGroupByOutputType = {
     _min: DetallePresupuestoMinAggregateOutputType | null;
     _max: DetallePresupuestoMaxAggregateOutputType | null;
 };
-type GetDetallePresupuestoGroupByPayload<T extends DetallePresupuestoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DetallePresupuestoGroupByOutputType, T['by']> & {
+export type GetDetallePresupuestoGroupByPayload<T extends DetallePresupuestoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<DetallePresupuestoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof DetallePresupuestoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], DetallePresupuestoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], DetallePresupuestoGroupByOutputType[P]>;
 }>>;
 export type DetallePresupuestoWhereInput = {
@@ -737,4 +737,3 @@ export type DetallePresupuestoDefaultArgs<ExtArgs extends runtime.Types.Extensio
     omit?: Prisma.DetallePresupuestoOmit<ExtArgs> | null;
     include?: Prisma.DetallePresupuestoInclude<ExtArgs> | null;
 };
-export {};

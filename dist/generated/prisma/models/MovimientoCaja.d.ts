@@ -119,7 +119,7 @@ export type MovimientoCajaGroupByOutputType = {
     _min: MovimientoCajaMinAggregateOutputType | null;
     _max: MovimientoCajaMaxAggregateOutputType | null;
 };
-type GetMovimientoCajaGroupByPayload<T extends MovimientoCajaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<MovimientoCajaGroupByOutputType, T['by']> & {
+export type GetMovimientoCajaGroupByPayload<T extends MovimientoCajaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<MovimientoCajaGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof MovimientoCajaGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], MovimientoCajaGroupByOutputType[P]> : Prisma.GetScalarType<T[P], MovimientoCajaGroupByOutputType[P]>;
 }>>;
 export type MovimientoCajaWhereInput = {
@@ -610,4 +610,3 @@ export type MovimientoCajaDefaultArgs<ExtArgs extends runtime.Types.Extensions.I
     omit?: Prisma.MovimientoCajaOmit<ExtArgs> | null;
     include?: Prisma.MovimientoCajaInclude<ExtArgs> | null;
 };
-export {};

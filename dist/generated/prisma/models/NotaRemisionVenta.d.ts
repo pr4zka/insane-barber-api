@@ -101,7 +101,7 @@ export type NotaRemisionVentaGroupByOutputType = {
     _min: NotaRemisionVentaMinAggregateOutputType | null;
     _max: NotaRemisionVentaMaxAggregateOutputType | null;
 };
-type GetNotaRemisionVentaGroupByPayload<T extends NotaRemisionVentaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaRemisionVentaGroupByOutputType, T['by']> & {
+export type GetNotaRemisionVentaGroupByPayload<T extends NotaRemisionVentaGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<NotaRemisionVentaGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof NotaRemisionVentaGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], NotaRemisionVentaGroupByOutputType[P]> : Prisma.GetScalarType<T[P], NotaRemisionVentaGroupByOutputType[P]>;
 }>>;
 export type NotaRemisionVentaWhereInput = {
@@ -493,4 +493,3 @@ export type NotaRemisionVentaDefaultArgs<ExtArgs extends runtime.Types.Extension
     omit?: Prisma.NotaRemisionVentaOmit<ExtArgs> | null;
     include?: Prisma.NotaRemisionVentaInclude<ExtArgs> | null;
 };
-export {};

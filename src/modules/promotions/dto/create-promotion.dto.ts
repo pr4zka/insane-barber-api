@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsBoolean, IsIn } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePromotionDto {
@@ -10,9 +10,20 @@ export class CreatePromotionDto {
   @IsString()
   descripcion: string;
 
-  @ApiProperty({ description: 'Porcentaje de descuento', example: 20 })
+  @ApiPropertyOptional({ description: 'Tipo de promocion', enum: ['porcentaje', 'monto_fijo'], example: 'porcentaje' })
+  @IsOptional()
+  @IsIn(['porcentaje', 'monto_fijo'])
+  tipo?: string;
+
+  @ApiPropertyOptional({ description: 'Porcentaje de descuento (si tipo = porcentaje)', example: 20 })
+  @IsOptional()
   @IsNumber()
-  porcentaje: number;
+  porcentaje?: number;
+
+  @ApiPropertyOptional({ description: 'Monto fijo en guaranies (si tipo = monto_fijo)', example: 5000 })
+  @IsOptional()
+  @IsNumber()
+  monto?: number;
 
   @ApiProperty({ description: 'Fecha de inicio (YYYY-MM-DD)', example: '2026-01-01' })
   @IsString()

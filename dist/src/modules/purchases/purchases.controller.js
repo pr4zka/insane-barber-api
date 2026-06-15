@@ -20,6 +20,8 @@ const create_supplier_dto_1 = require("./dto/create-supplier.dto");
 const create_purchase_order_dto_1 = require("./dto/create-purchase-order.dto");
 const create_purchase_note_dto_1 = require("./dto/create-purchase-note.dto");
 const create_adjustment_dto_1 = require("./dto/create-adjustment.dto");
+const update_libro_compras_dto_1 = require("./dto/update-libro-compras.dto");
+const create_expense_dto_1 = require("./dto/create-expense.dto");
 const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
@@ -59,6 +61,12 @@ let PurchasesController = class PurchasesController {
     }
     async findAllLibroCompras() {
         return this.service.findAllLibroCompras();
+    }
+    async createExpense(dto) {
+        return this.service.createExpense(dto);
+    }
+    async updateLibroCompras(id, dto) {
+        return this.service.updateLibroCompras(id, dto);
     }
     async findAllNotasRemision() {
         return this.service.findAllNotasRemision();
@@ -179,6 +187,26 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], PurchasesController.prototype, "findAllLibroCompras", null);
+__decorate([
+    (0, common_1.Post)('ledger'),
+    (0, roles_decorator_1.Roles)('administrador'),
+    (0, swagger_1.ApiOperation)({ summary: 'Registrar un gasto/servicio directo (sin orden ni stock)' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Gasto registrado' }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_expense_dto_1.CreateExpenseDto]),
+    __metadata("design:returntype", Promise)
+], PurchasesController.prototype, "createExpense", null);
+__decorate([
+    (0, common_1.Patch)('ledger/:id'),
+    (0, roles_decorator_1.Roles)('administrador'),
+    (0, swagger_1.ApiOperation)({ summary: 'Actualizar categoria/detalle de un registro del libro de compras' }),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_libro_compras_dto_1.UpdateLibroComprasDto]),
+    __metadata("design:returntype", Promise)
+], PurchasesController.prototype, "updateLibroCompras", null);
 __decorate([
     (0, common_1.Get)('delivery-notes'),
     (0, roles_decorator_1.Roles)('administrador'),

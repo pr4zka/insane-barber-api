@@ -97,8 +97,13 @@ let PaymentsRepository = class PaymentsRepository {
                     throw new common_1.BadRequestException('La promoción seleccionada no está vigente en la fecha actual.');
                 }
                 montoOriginal = data.monto;
-                porcentajeAplicado = Number(promocion.porcentaje);
-                montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+                if (promocion.tipo === 'monto_fijo') {
+                    montoFinal = Math.max(0, data.monto - Number(promocion.monto ?? 0));
+                }
+                else {
+                    porcentajeAplicado = Number(promocion.porcentaje);
+                    montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+                }
                 promocionId = promocion.id;
             }
             if (data.descuentoId) {
@@ -112,8 +117,13 @@ let PaymentsRepository = class PaymentsRepository {
                     throw new common_1.BadRequestException('El descuento seleccionado no está activo.');
                 }
                 montoOriginal = data.monto;
-                porcentajeAplicado = Number(descuento.porcentaje);
-                montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+                if (descuento.tipo === 'monto_fijo') {
+                    montoFinal = Math.max(0, data.monto - Number(descuento.monto ?? 0));
+                }
+                else {
+                    porcentajeAplicado = Number(descuento.porcentaje);
+                    montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+                }
                 descuentoId = descuento.id;
             }
             const pago = await tx.pago.create({
@@ -134,6 +144,10 @@ let PaymentsRepository = class PaymentsRepository {
             const conceptoParts = [turno.servicio?.nombre ?? 'Pago de servicio'];
             if (porcentajeAplicado) {
                 conceptoParts.push(`(${porcentajeAplicado}% ${promocionId ? 'promo' : 'desc'})`);
+            }
+            else if (montoOriginal !== null && montoOriginal > montoFinal) {
+                const descGs = montoOriginal - montoFinal;
+                conceptoParts.push(`(-${descGs} ${promocionId ? 'promo' : 'desc'})`);
             }
             await tx.movimientoCaja.create({
                 data: {

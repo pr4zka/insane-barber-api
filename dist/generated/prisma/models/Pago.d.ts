@@ -170,7 +170,7 @@ export type PagoGroupByOutputType = {
     _min: PagoMinAggregateOutputType | null;
     _max: PagoMaxAggregateOutputType | null;
 };
-type GetPagoGroupByPayload<T extends PagoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PagoGroupByOutputType, T['by']> & {
+export type GetPagoGroupByPayload<T extends PagoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<PagoGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof PagoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], PagoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], PagoGroupByOutputType[P]>;
 }>>;
 export type PagoWhereInput = {
@@ -1303,4 +1303,3 @@ export type PagoDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
     omit?: Prisma.PagoOmit<ExtArgs> | null;
     include?: Prisma.PagoInclude<ExtArgs> | null;
 };
-export {};

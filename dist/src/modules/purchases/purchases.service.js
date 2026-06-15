@@ -68,6 +68,15 @@ let PurchasesService = class PurchasesService {
     async findAllLibroCompras() {
         return this.repository.findAllLibroCompras();
     }
+    async createExpense(dto) {
+        return this.repository.createExpense(dto);
+    }
+    async updateLibroCompras(id, dto) {
+        const entry = await this.repository.findLibroComprasById(id);
+        if (!entry)
+            throw new common_1.NotFoundException(`Registro de libro de compras #${id} no encontrado.`);
+        return this.repository.updateLibroCompras(id, dto);
+    }
     async findAllNotasRemision() {
         return this.repository.findAllNotasRemision();
     }

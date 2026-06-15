@@ -20,11 +20,14 @@ let PromotionsRepository = class PromotionsRepository {
         return this.prisma.promocion.findMany();
     }
     async create(data) {
+        const tipo = data.tipo ?? 'porcentaje';
         return this.prisma.promocion.create({
             data: {
                 nombre: data.nombre,
                 descripcion: data.descripcion,
-                porcentaje: data.porcentaje,
+                tipo,
+                porcentaje: tipo === 'porcentaje' ? data.porcentaje : null,
+                monto: tipo === 'monto_fijo' ? data.monto : null,
                 fechaInicio: new Date(data.fechaInicio),
                 fechaFin: new Date(data.fechaFin),
                 estado: data.estado,
@@ -38,6 +41,12 @@ let PromotionsRepository = class PromotionsRepository {
         }
         if (data.fechaFin) {
             updateData.fechaFin = new Date(data.fechaFin);
+        }
+        if (data.tipo === 'monto_fijo') {
+            updateData.porcentaje = null;
+        }
+        else if (data.tipo === 'porcentaje') {
+            updateData.monto = null;
         }
         return this.prisma.promocion.update({
             where: { id },

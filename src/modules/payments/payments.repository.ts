@@ -118,8 +118,12 @@ export class PaymentsRepository {
         }
 
         montoOriginal = data.monto;
-        porcentajeAplicado = Number(promocion.porcentaje);
-        montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+        if (promocion.tipo === 'monto_fijo') {
+          montoFinal = Math.max(0, data.monto - Number(promocion.monto ?? 0));
+        } else {
+          porcentajeAplicado = Number(promocion.porcentaje);
+          montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+        }
         promocionId = promocion.id;
       }
 
@@ -138,8 +142,12 @@ export class PaymentsRepository {
         }
 
         montoOriginal = data.monto;
-        porcentajeAplicado = Number(descuento.porcentaje);
-        montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+        if (descuento.tipo === 'monto_fijo') {
+          montoFinal = Math.max(0, data.monto - Number(descuento.monto ?? 0));
+        } else {
+          porcentajeAplicado = Number(descuento.porcentaje);
+          montoFinal = Math.round(data.monto * (1 - porcentajeAplicado / 100));
+        }
         descuentoId = descuento.id;
       }
 
@@ -166,6 +174,9 @@ export class PaymentsRepository {
       const conceptoParts = [turno.servicio?.nombre ?? 'Pago de servicio'];
       if (porcentajeAplicado) {
         conceptoParts.push(`(${porcentajeAplicado}% ${promocionId ? 'promo' : 'desc'})`);
+      } else if (montoOriginal !== null && montoOriginal > montoFinal) {
+        const descGs = montoOriginal - montoFinal;
+        conceptoParts.push(`(-${descGs} ${promocionId ? 'promo' : 'desc'})`);
       }
 
       await tx.movimientoCaja.create({

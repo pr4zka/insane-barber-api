@@ -2284,7 +2284,9 @@ export declare const PromocionScalarFieldEnum: {
     readonly id: "id";
     readonly nombre: "nombre";
     readonly descripcion: "descripcion";
+    readonly tipo: "tipo";
     readonly porcentaje: "porcentaje";
+    readonly monto: "monto";
     readonly fechaInicio: "fechaInicio";
     readonly fechaFin: "fechaFin";
     readonly estado: "estado";
@@ -2294,7 +2296,9 @@ export declare const DescuentoScalarFieldEnum: {
     readonly id: "id";
     readonly nombre: "nombre";
     readonly descripcion: "descripcion";
+    readonly tipo: "tipo";
     readonly porcentaje: "porcentaje";
+    readonly monto: "monto";
     readonly estado: "estado";
 };
 export type DescuentoScalarFieldEnum = (typeof DescuentoScalarFieldEnum)[keyof typeof DescuentoScalarFieldEnum];
@@ -2426,6 +2430,13 @@ export declare const OrdenCompraScalarFieldEnum: {
     readonly estado: "estado";
     readonly total: "total";
     readonly observacion: "observacion";
+    readonly categoria: "categoria";
+    readonly detalle: "detalle";
+    readonly tipoComprobante: "tipoComprobante";
+    readonly nroComprobante: "nroComprobante";
+    readonly timbrado: "timbrado";
+    readonly condicion: "condicion";
+    readonly tasaIva: "tasaIva";
 };
 export type OrdenCompraScalarFieldEnum = (typeof OrdenCompraScalarFieldEnum)[keyof typeof OrdenCompraScalarFieldEnum];
 export declare const DetalleOrdenCompraScalarFieldEnum: {
@@ -2442,8 +2453,21 @@ export declare const LibroComprasScalarFieldEnum: {
     readonly ordenCompraId: "ordenCompraId";
     readonly fecha: "fecha";
     readonly concepto: "concepto";
+    readonly categoria: "categoria";
+    readonly detalle: "detalle";
     readonly monto: "monto";
     readonly proveedor: "proveedor";
+    readonly rucProveedor: "rucProveedor";
+    readonly tipoComprobante: "tipoComprobante";
+    readonly nroComprobante: "nroComprobante";
+    readonly timbrado: "timbrado";
+    readonly condicion: "condicion";
+    readonly tasaIva: "tasaIva";
+    readonly gravado10: "gravado10";
+    readonly iva10: "iva10";
+    readonly gravado5: "gravado5";
+    readonly iva5: "iva5";
+    readonly exento: "exento";
 };
 export type LibroComprasScalarFieldEnum = (typeof LibroComprasScalarFieldEnum)[keyof typeof LibroComprasScalarFieldEnum];
 export declare const NotaRemisionScalarFieldEnum: {
@@ -2521,6 +2545,7 @@ export type PrismaClientOptions = ({
     };
     omit?: GlobalOmitConfig;
     comments?: runtime.SqlCommenterPlugin[];
+    queryPlanCacheMaxSize?: number;
 };
 export type GlobalOmitConfig = {
     rol?: Prisma.RolOmit;

@@ -130,7 +130,7 @@ export type AjusteCompraGroupByOutputType = {
     _min: AjusteCompraMinAggregateOutputType | null;
     _max: AjusteCompraMaxAggregateOutputType | null;
 };
-type GetAjusteCompraGroupByPayload<T extends AjusteCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<AjusteCompraGroupByOutputType, T['by']> & {
+export type GetAjusteCompraGroupByPayload<T extends AjusteCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<AjusteCompraGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof AjusteCompraGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], AjusteCompraGroupByOutputType[P]> : Prisma.GetScalarType<T[P], AjusteCompraGroupByOutputType[P]>;
 }>>;
 export type AjusteCompraWhereInput = {
@@ -651,4 +651,3 @@ export type AjusteCompraDefaultArgs<ExtArgs extends runtime.Types.Extensions.Int
     omit?: Prisma.AjusteCompraOmit<ExtArgs> | null;
     include?: Prisma.AjusteCompraInclude<ExtArgs> | null;
 };
-export {};

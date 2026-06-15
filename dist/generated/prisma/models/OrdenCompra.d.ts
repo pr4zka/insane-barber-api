@@ -12,11 +12,13 @@ export type OrdenCompraAvgAggregateOutputType = {
     id: number | null;
     proveedorId: number | null;
     total: runtime.Decimal | null;
+    tasaIva: number | null;
 };
 export type OrdenCompraSumAggregateOutputType = {
     id: number | null;
     proveedorId: number | null;
     total: runtime.Decimal | null;
+    tasaIva: number | null;
 };
 export type OrdenCompraMinAggregateOutputType = {
     id: number | null;
@@ -25,6 +27,13 @@ export type OrdenCompraMinAggregateOutputType = {
     estado: string | null;
     total: runtime.Decimal | null;
     observacion: string | null;
+    categoria: string | null;
+    detalle: string | null;
+    tipoComprobante: string | null;
+    nroComprobante: string | null;
+    timbrado: string | null;
+    condicion: string | null;
+    tasaIva: number | null;
 };
 export type OrdenCompraMaxAggregateOutputType = {
     id: number | null;
@@ -33,6 +42,13 @@ export type OrdenCompraMaxAggregateOutputType = {
     estado: string | null;
     total: runtime.Decimal | null;
     observacion: string | null;
+    categoria: string | null;
+    detalle: string | null;
+    tipoComprobante: string | null;
+    nroComprobante: string | null;
+    timbrado: string | null;
+    condicion: string | null;
+    tasaIva: number | null;
 };
 export type OrdenCompraCountAggregateOutputType = {
     id: number;
@@ -41,17 +57,26 @@ export type OrdenCompraCountAggregateOutputType = {
     estado: number;
     total: number;
     observacion: number;
+    categoria: number;
+    detalle: number;
+    tipoComprobante: number;
+    nroComprobante: number;
+    timbrado: number;
+    condicion: number;
+    tasaIva: number;
     _all: number;
 };
 export type OrdenCompraAvgAggregateInputType = {
     id?: true;
     proveedorId?: true;
     total?: true;
+    tasaIva?: true;
 };
 export type OrdenCompraSumAggregateInputType = {
     id?: true;
     proveedorId?: true;
     total?: true;
+    tasaIva?: true;
 };
 export type OrdenCompraMinAggregateInputType = {
     id?: true;
@@ -60,6 +85,13 @@ export type OrdenCompraMinAggregateInputType = {
     estado?: true;
     total?: true;
     observacion?: true;
+    categoria?: true;
+    detalle?: true;
+    tipoComprobante?: true;
+    nroComprobante?: true;
+    timbrado?: true;
+    condicion?: true;
+    tasaIva?: true;
 };
 export type OrdenCompraMaxAggregateInputType = {
     id?: true;
@@ -68,6 +100,13 @@ export type OrdenCompraMaxAggregateInputType = {
     estado?: true;
     total?: true;
     observacion?: true;
+    categoria?: true;
+    detalle?: true;
+    tipoComprobante?: true;
+    nroComprobante?: true;
+    timbrado?: true;
+    condicion?: true;
+    tasaIva?: true;
 };
 export type OrdenCompraCountAggregateInputType = {
     id?: true;
@@ -76,6 +115,13 @@ export type OrdenCompraCountAggregateInputType = {
     estado?: true;
     total?: true;
     observacion?: true;
+    categoria?: true;
+    detalle?: true;
+    tipoComprobante?: true;
+    nroComprobante?: true;
+    timbrado?: true;
+    condicion?: true;
+    tasaIva?: true;
     _all?: true;
 };
 export type OrdenCompraAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -113,13 +159,20 @@ export type OrdenCompraGroupByOutputType = {
     estado: string;
     total: runtime.Decimal;
     observacion: string;
+    categoria: string;
+    detalle: string;
+    tipoComprobante: string;
+    nroComprobante: string;
+    timbrado: string;
+    condicion: string;
+    tasaIva: number;
     _count: OrdenCompraCountAggregateOutputType | null;
     _avg: OrdenCompraAvgAggregateOutputType | null;
     _sum: OrdenCompraSumAggregateOutputType | null;
     _min: OrdenCompraMinAggregateOutputType | null;
     _max: OrdenCompraMaxAggregateOutputType | null;
 };
-type GetOrdenCompraGroupByPayload<T extends OrdenCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<OrdenCompraGroupByOutputType, T['by']> & {
+export type GetOrdenCompraGroupByPayload<T extends OrdenCompraGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<OrdenCompraGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof OrdenCompraGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], OrdenCompraGroupByOutputType[P]> : Prisma.GetScalarType<T[P], OrdenCompraGroupByOutputType[P]>;
 }>>;
 export type OrdenCompraWhereInput = {
@@ -132,6 +185,13 @@ export type OrdenCompraWhereInput = {
     estado?: Prisma.StringFilter<"OrdenCompra"> | string;
     total?: Prisma.DecimalFilter<"OrdenCompra"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    categoria?: Prisma.StringFilter<"OrdenCompra"> | string;
+    detalle?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tipoComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    nroComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    timbrado?: Prisma.StringFilter<"OrdenCompra"> | string;
+    condicion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tasaIva?: Prisma.IntFilter<"OrdenCompra"> | number;
     proveedor?: Prisma.XOR<Prisma.ProveedorScalarRelationFilter, Prisma.ProveedorWhereInput>;
     detalles?: Prisma.DetalleOrdenCompraListRelationFilter;
     libroCompras?: Prisma.XOR<Prisma.LibroComprasNullableScalarRelationFilter, Prisma.LibroComprasWhereInput> | null;
@@ -146,6 +206,13 @@ export type OrdenCompraOrderByWithRelationInput = {
     estado?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
     observacion?: Prisma.SortOrder;
+    categoria?: Prisma.SortOrder;
+    detalle?: Prisma.SortOrder;
+    tipoComprobante?: Prisma.SortOrder;
+    nroComprobante?: Prisma.SortOrder;
+    timbrado?: Prisma.SortOrder;
+    condicion?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
     proveedor?: Prisma.ProveedorOrderByWithRelationInput;
     detalles?: Prisma.DetalleOrdenCompraOrderByRelationAggregateInput;
     libroCompras?: Prisma.LibroComprasOrderByWithRelationInput;
@@ -163,6 +230,13 @@ export type OrdenCompraWhereUniqueInput = Prisma.AtLeast<{
     estado?: Prisma.StringFilter<"OrdenCompra"> | string;
     total?: Prisma.DecimalFilter<"OrdenCompra"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    categoria?: Prisma.StringFilter<"OrdenCompra"> | string;
+    detalle?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tipoComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    nroComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    timbrado?: Prisma.StringFilter<"OrdenCompra"> | string;
+    condicion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tasaIva?: Prisma.IntFilter<"OrdenCompra"> | number;
     proveedor?: Prisma.XOR<Prisma.ProveedorScalarRelationFilter, Prisma.ProveedorWhereInput>;
     detalles?: Prisma.DetalleOrdenCompraListRelationFilter;
     libroCompras?: Prisma.XOR<Prisma.LibroComprasNullableScalarRelationFilter, Prisma.LibroComprasWhereInput> | null;
@@ -177,6 +251,13 @@ export type OrdenCompraOrderByWithAggregationInput = {
     estado?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
     observacion?: Prisma.SortOrder;
+    categoria?: Prisma.SortOrder;
+    detalle?: Prisma.SortOrder;
+    tipoComprobante?: Prisma.SortOrder;
+    nroComprobante?: Prisma.SortOrder;
+    timbrado?: Prisma.SortOrder;
+    condicion?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
     _count?: Prisma.OrdenCompraCountOrderByAggregateInput;
     _avg?: Prisma.OrdenCompraAvgOrderByAggregateInput;
     _max?: Prisma.OrdenCompraMaxOrderByAggregateInput;
@@ -193,12 +274,26 @@ export type OrdenCompraScalarWhereWithAggregatesInput = {
     estado?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
     total?: Prisma.DecimalWithAggregatesFilter<"OrdenCompra"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    categoria?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    detalle?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    tipoComprobante?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    nroComprobante?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    timbrado?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    condicion?: Prisma.StringWithAggregatesFilter<"OrdenCompra"> | string;
+    tasaIva?: Prisma.IntWithAggregatesFilter<"OrdenCompra"> | number;
 };
 export type OrdenCompraCreateInput = {
     fecha?: Date | string;
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
@@ -213,6 +308,13 @@ export type OrdenCompraUncheckedCreateInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
@@ -224,6 +326,13 @@ export type OrdenCompraUpdateInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
@@ -238,6 +347,13 @@ export type OrdenCompraUncheckedUpdateInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
@@ -251,12 +367,26 @@ export type OrdenCompraCreateManyInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
 };
 export type OrdenCompraUpdateManyMutationInput = {
     fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type OrdenCompraUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -265,6 +395,13 @@ export type OrdenCompraUncheckedUpdateManyInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type OrdenCompraListRelationFilter = {
     every?: Prisma.OrdenCompraWhereInput;
@@ -281,11 +418,19 @@ export type OrdenCompraCountOrderByAggregateInput = {
     estado?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
     observacion?: Prisma.SortOrder;
+    categoria?: Prisma.SortOrder;
+    detalle?: Prisma.SortOrder;
+    tipoComprobante?: Prisma.SortOrder;
+    nroComprobante?: Prisma.SortOrder;
+    timbrado?: Prisma.SortOrder;
+    condicion?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
 };
 export type OrdenCompraAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     proveedorId?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
 };
 export type OrdenCompraMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -294,6 +439,13 @@ export type OrdenCompraMaxOrderByAggregateInput = {
     estado?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
     observacion?: Prisma.SortOrder;
+    categoria?: Prisma.SortOrder;
+    detalle?: Prisma.SortOrder;
+    tipoComprobante?: Prisma.SortOrder;
+    nroComprobante?: Prisma.SortOrder;
+    timbrado?: Prisma.SortOrder;
+    condicion?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
 };
 export type OrdenCompraMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -302,15 +454,27 @@ export type OrdenCompraMinOrderByAggregateInput = {
     estado?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
     observacion?: Prisma.SortOrder;
+    categoria?: Prisma.SortOrder;
+    detalle?: Prisma.SortOrder;
+    tipoComprobante?: Prisma.SortOrder;
+    nroComprobante?: Prisma.SortOrder;
+    timbrado?: Prisma.SortOrder;
+    condicion?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
 };
 export type OrdenCompraSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     proveedorId?: Prisma.SortOrder;
     total?: Prisma.SortOrder;
+    tasaIva?: Prisma.SortOrder;
 };
 export type OrdenCompraScalarRelationFilter = {
     is?: Prisma.OrdenCompraWhereInput;
     isNot?: Prisma.OrdenCompraWhereInput;
+};
+export type OrdenCompraNullableScalarRelationFilter = {
+    is?: Prisma.OrdenCompraWhereInput | null;
+    isNot?: Prisma.OrdenCompraWhereInput | null;
 };
 export type OrdenCompraCreateNestedManyWithoutProveedorInput = {
     create?: Prisma.XOR<Prisma.OrdenCompraCreateWithoutProveedorInput, Prisma.OrdenCompraUncheckedCreateWithoutProveedorInput> | Prisma.OrdenCompraCreateWithoutProveedorInput[] | Prisma.OrdenCompraUncheckedCreateWithoutProveedorInput[];
@@ -367,10 +531,12 @@ export type OrdenCompraCreateNestedOneWithoutLibroComprasInput = {
     connectOrCreate?: Prisma.OrdenCompraCreateOrConnectWithoutLibroComprasInput;
     connect?: Prisma.OrdenCompraWhereUniqueInput;
 };
-export type OrdenCompraUpdateOneRequiredWithoutLibroComprasNestedInput = {
+export type OrdenCompraUpdateOneWithoutLibroComprasNestedInput = {
     create?: Prisma.XOR<Prisma.OrdenCompraCreateWithoutLibroComprasInput, Prisma.OrdenCompraUncheckedCreateWithoutLibroComprasInput>;
     connectOrCreate?: Prisma.OrdenCompraCreateOrConnectWithoutLibroComprasInput;
     upsert?: Prisma.OrdenCompraUpsertWithoutLibroComprasInput;
+    disconnect?: Prisma.OrdenCompraWhereInput | boolean;
+    delete?: Prisma.OrdenCompraWhereInput | boolean;
     connect?: Prisma.OrdenCompraWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.OrdenCompraUpdateToOneWithWhereWithoutLibroComprasInput, Prisma.OrdenCompraUpdateWithoutLibroComprasInput>, Prisma.OrdenCompraUncheckedUpdateWithoutLibroComprasInput>;
 };
@@ -415,6 +581,13 @@ export type OrdenCompraCreateWithoutProveedorInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionCreateNestedOneWithoutOrdenCompraInput;
@@ -427,6 +600,13 @@ export type OrdenCompraUncheckedCreateWithoutProveedorInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
@@ -464,12 +644,26 @@ export type OrdenCompraScalarWhereInput = {
     estado?: Prisma.StringFilter<"OrdenCompra"> | string;
     total?: Prisma.DecimalFilter<"OrdenCompra"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    categoria?: Prisma.StringFilter<"OrdenCompra"> | string;
+    detalle?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tipoComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    nroComprobante?: Prisma.StringFilter<"OrdenCompra"> | string;
+    timbrado?: Prisma.StringFilter<"OrdenCompra"> | string;
+    condicion?: Prisma.StringFilter<"OrdenCompra"> | string;
+    tasaIva?: Prisma.IntFilter<"OrdenCompra"> | number;
 };
 export type OrdenCompraCreateWithoutDetallesInput = {
     fecha?: Date | string;
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionCreateNestedOneWithoutOrdenCompraInput;
@@ -483,6 +677,13 @@ export type OrdenCompraUncheckedCreateWithoutDetallesInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notasCD?: Prisma.NotaCDCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
@@ -506,6 +707,13 @@ export type OrdenCompraUpdateWithoutDetallesInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUpdateOneWithoutOrdenCompraNestedInput;
@@ -519,6 +727,13 @@ export type OrdenCompraUncheckedUpdateWithoutDetallesInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notasCD?: Prisma.NotaCDCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
@@ -529,6 +744,13 @@ export type OrdenCompraCreateWithoutLibroComprasInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionCreateNestedOneWithoutOrdenCompraInput;
@@ -542,6 +764,13 @@ export type OrdenCompraUncheckedCreateWithoutLibroComprasInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notasCD?: Prisma.NotaCDCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
@@ -565,6 +794,13 @@ export type OrdenCompraUpdateWithoutLibroComprasInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUpdateOneWithoutOrdenCompraNestedInput;
@@ -578,6 +814,13 @@ export type OrdenCompraUncheckedUpdateWithoutLibroComprasInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notasCD?: Prisma.NotaCDCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
@@ -588,6 +831,13 @@ export type OrdenCompraCreateWithoutNotaRemisionInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
@@ -601,6 +851,13 @@ export type OrdenCompraUncheckedCreateWithoutNotaRemisionInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notasCD?: Prisma.NotaCDCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
@@ -624,6 +881,13 @@ export type OrdenCompraUpdateWithoutNotaRemisionInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
@@ -637,6 +901,13 @@ export type OrdenCompraUncheckedUpdateWithoutNotaRemisionInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notasCD?: Prisma.NotaCDCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
@@ -647,6 +918,13 @@ export type OrdenCompraCreateWithoutNotasCDInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
@@ -660,6 +938,13 @@ export type OrdenCompraUncheckedCreateWithoutNotasCDInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
@@ -683,6 +968,13 @@ export type OrdenCompraUpdateWithoutNotasCDInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
@@ -696,6 +988,13 @@ export type OrdenCompraUncheckedUpdateWithoutNotasCDInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
@@ -706,6 +1005,13 @@ export type OrdenCompraCreateWithoutAjustesInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     proveedor: Prisma.ProveedorCreateNestedOneWithoutOrdenesCompraInput;
     detalles?: Prisma.DetalleOrdenCompraCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasCreateNestedOneWithoutOrdenCompraInput;
@@ -719,6 +1025,13 @@ export type OrdenCompraUncheckedCreateWithoutAjustesInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedCreateNestedManyWithoutOrdenCompraInput;
     libroCompras?: Prisma.LibroComprasUncheckedCreateNestedOneWithoutOrdenCompraInput;
     notaRemision?: Prisma.NotaRemisionUncheckedCreateNestedOneWithoutOrdenCompraInput;
@@ -742,6 +1055,13 @@ export type OrdenCompraUpdateWithoutAjustesInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     proveedor?: Prisma.ProveedorUpdateOneRequiredWithoutOrdenesCompraNestedInput;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
@@ -755,6 +1075,13 @@ export type OrdenCompraUncheckedUpdateWithoutAjustesInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
@@ -766,12 +1093,26 @@ export type OrdenCompraCreateManyProveedorInput = {
     estado?: string;
     total?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: string;
+    categoria?: string;
+    detalle?: string;
+    tipoComprobante?: string;
+    nroComprobante?: string;
+    timbrado?: string;
+    condicion?: string;
+    tasaIva?: number;
 };
 export type OrdenCompraUpdateWithoutProveedorInput = {
     fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUpdateOneWithoutOrdenCompraNestedInput;
@@ -784,6 +1125,13 @@ export type OrdenCompraUncheckedUpdateWithoutProveedorInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
     detalles?: Prisma.DetalleOrdenCompraUncheckedUpdateManyWithoutOrdenCompraNestedInput;
     libroCompras?: Prisma.LibroComprasUncheckedUpdateOneWithoutOrdenCompraNestedInput;
     notaRemision?: Prisma.NotaRemisionUncheckedUpdateOneWithoutOrdenCompraNestedInput;
@@ -796,6 +1144,13 @@ export type OrdenCompraUncheckedUpdateManyWithoutProveedorInput = {
     estado?: Prisma.StringFieldUpdateOperationsInput | string;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     observacion?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoria?: Prisma.StringFieldUpdateOperationsInput | string;
+    detalle?: Prisma.StringFieldUpdateOperationsInput | string;
+    tipoComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    nroComprobante?: Prisma.StringFieldUpdateOperationsInput | string;
+    timbrado?: Prisma.StringFieldUpdateOperationsInput | string;
+    condicion?: Prisma.StringFieldUpdateOperationsInput | string;
+    tasaIva?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type OrdenCompraCountOutputType = {
     detalles: number;
@@ -826,6 +1181,13 @@ export type OrdenCompraSelect<ExtArgs extends runtime.Types.Extensions.InternalA
     estado?: boolean;
     total?: boolean;
     observacion?: boolean;
+    categoria?: boolean;
+    detalle?: boolean;
+    tipoComprobante?: boolean;
+    nroComprobante?: boolean;
+    timbrado?: boolean;
+    condicion?: boolean;
+    tasaIva?: boolean;
     proveedor?: boolean | Prisma.ProveedorDefaultArgs<ExtArgs>;
     detalles?: boolean | Prisma.OrdenCompra$detallesArgs<ExtArgs>;
     libroCompras?: boolean | Prisma.OrdenCompra$libroComprasArgs<ExtArgs>;
@@ -841,6 +1203,13 @@ export type OrdenCompraSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
     estado?: boolean;
     total?: boolean;
     observacion?: boolean;
+    categoria?: boolean;
+    detalle?: boolean;
+    tipoComprobante?: boolean;
+    nroComprobante?: boolean;
+    timbrado?: boolean;
+    condicion?: boolean;
+    tasaIva?: boolean;
     proveedor?: boolean | Prisma.ProveedorDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["ordenCompra"]>;
 export type OrdenCompraSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -850,6 +1219,13 @@ export type OrdenCompraSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
     estado?: boolean;
     total?: boolean;
     observacion?: boolean;
+    categoria?: boolean;
+    detalle?: boolean;
+    tipoComprobante?: boolean;
+    nroComprobante?: boolean;
+    timbrado?: boolean;
+    condicion?: boolean;
+    tasaIva?: boolean;
     proveedor?: boolean | Prisma.ProveedorDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["ordenCompra"]>;
 export type OrdenCompraSelectScalar = {
@@ -859,8 +1235,15 @@ export type OrdenCompraSelectScalar = {
     estado?: boolean;
     total?: boolean;
     observacion?: boolean;
+    categoria?: boolean;
+    detalle?: boolean;
+    tipoComprobante?: boolean;
+    nroComprobante?: boolean;
+    timbrado?: boolean;
+    condicion?: boolean;
+    tasaIva?: boolean;
 };
-export type OrdenCompraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proveedorId" | "fecha" | "estado" | "total" | "observacion", ExtArgs["result"]["ordenCompra"]>;
+export type OrdenCompraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proveedorId" | "fecha" | "estado" | "total" | "observacion" | "categoria" | "detalle" | "tipoComprobante" | "nroComprobante" | "timbrado" | "condicion" | "tasaIva", ExtArgs["result"]["ordenCompra"]>;
 export type OrdenCompraInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     proveedor?: boolean | Prisma.ProveedorDefaultArgs<ExtArgs>;
     detalles?: boolean | Prisma.OrdenCompra$detallesArgs<ExtArgs>;
@@ -893,6 +1276,13 @@ export type $OrdenCompraPayload<ExtArgs extends runtime.Types.Extensions.Interna
         estado: string;
         total: runtime.Decimal;
         observacion: string;
+        categoria: string;
+        detalle: string;
+        tipoComprobante: string;
+        nroComprobante: string;
+        timbrado: string;
+        condicion: string;
+        tasaIva: number;
     }, ExtArgs["result"]["ordenCompra"]>;
     composites: {};
 };
@@ -962,6 +1352,13 @@ export interface OrdenCompraFieldRefs {
     readonly estado: Prisma.FieldRef<"OrdenCompra", 'String'>;
     readonly total: Prisma.FieldRef<"OrdenCompra", 'Decimal'>;
     readonly observacion: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly categoria: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly detalle: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly tipoComprobante: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly nroComprobante: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly timbrado: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly condicion: Prisma.FieldRef<"OrdenCompra", 'String'>;
+    readonly tasaIva: Prisma.FieldRef<"OrdenCompra", 'Int'>;
 }
 export type OrdenCompraFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.OrdenCompraSelect<ExtArgs> | null;
@@ -1113,4 +1510,3 @@ export type OrdenCompraDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inte
     omit?: Prisma.OrdenCompraOmit<ExtArgs> | null;
     include?: Prisma.OrdenCompraInclude<ExtArgs> | null;
 };
-export {};

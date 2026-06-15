@@ -83,7 +83,7 @@ export type RolGroupByOutputType = {
     _min: RolMinAggregateOutputType | null;
     _max: RolMaxAggregateOutputType | null;
 };
-type GetRolGroupByPayload<T extends RolGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<RolGroupByOutputType, T['by']> & {
+export type GetRolGroupByPayload<T extends RolGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<RolGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof RolGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], RolGroupByOutputType[P]> : Prisma.GetScalarType<T[P], RolGroupByOutputType[P]>;
 }>>;
 export type RolWhereInput = {
@@ -443,4 +443,3 @@ export type RolDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
     omit?: Prisma.RolOmit<ExtArgs> | null;
     include?: Prisma.RolInclude<ExtArgs> | null;
 };
-export {};

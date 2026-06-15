@@ -104,7 +104,7 @@ export type ClienteGroupByOutputType = {
     _min: ClienteMinAggregateOutputType | null;
     _max: ClienteMaxAggregateOutputType | null;
 };
-type GetClienteGroupByPayload<T extends ClienteGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ClienteGroupByOutputType, T['by']> & {
+export type GetClienteGroupByPayload<T extends ClienteGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ClienteGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof ClienteGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], ClienteGroupByOutputType[P]> : Prisma.GetScalarType<T[P], ClienteGroupByOutputType[P]>;
 }>>;
 export type ClienteWhereInput = {
@@ -712,4 +712,3 @@ export type ClienteDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
     omit?: Prisma.ClienteOmit<ExtArgs> | null;
     include?: Prisma.ClienteInclude<ExtArgs> | null;
 };
-export {};

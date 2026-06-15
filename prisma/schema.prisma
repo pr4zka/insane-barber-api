@@ -101,7 +101,9 @@ model Promocion {
   id          Int      @id @default(autoincrement())
   nombre      String   @db.VarChar(100)
   descripcion String   @db.Text
-  porcentaje  Decimal  @db.Decimal(5, 2)
+  tipo        String   @default("porcentaje") @db.VarChar(20)
+  porcentaje  Decimal? @db.Decimal(5, 2)
+  monto       Decimal? @db.Decimal(12, 0)
   fechaInicio DateTime @map("fecha_inicio") @db.Date
   fechaFin    DateTime @map("fecha_fin") @db.Date
   estado      Boolean  @default(true)
@@ -112,11 +114,13 @@ model Promocion {
 }
 
 model Descuento {
-  id          Int     @id @default(autoincrement())
-  nombre      String  @db.VarChar(100)
-  descripcion String  @db.Text
-  porcentaje  Decimal @db.Decimal(5, 2)
-  estado      Boolean @default(true)
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(100)
+  descripcion String   @db.Text
+  tipo        String   @default("porcentaje") @db.VarChar(20)
+  porcentaje  Decimal? @db.Decimal(5, 2)
+  monto       Decimal? @db.Decimal(12, 0)
+  estado      Boolean  @default(true)
 
   pagos Pago[]
 

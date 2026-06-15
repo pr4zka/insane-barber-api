@@ -119,7 +119,7 @@ export type LibroVentasGroupByOutputType = {
     _min: LibroVentasMinAggregateOutputType | null;
     _max: LibroVentasMaxAggregateOutputType | null;
 };
-type GetLibroVentasGroupByPayload<T extends LibroVentasGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<LibroVentasGroupByOutputType, T['by']> & {
+export type GetLibroVentasGroupByPayload<T extends LibroVentasGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<LibroVentasGroupByOutputType, T['by']> & {
     [P in ((keyof T) & (keyof LibroVentasGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], LibroVentasGroupByOutputType[P]> : Prisma.GetScalarType<T[P], LibroVentasGroupByOutputType[P]>;
 }>>;
 export type LibroVentasWhereInput = {
@@ -563,4 +563,3 @@ export type LibroVentasDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inte
     omit?: Prisma.LibroVentasOmit<ExtArgs> | null;
     include?: Prisma.LibroVentasInclude<ExtArgs> | null;
 };
-export {};
