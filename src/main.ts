@@ -13,7 +13,13 @@ async function bootstrap() {
   app.enableCors({
     origin: process.env.CORS_ORIGINS
       ? process.env.CORS_ORIGINS.split(',')
-      : ['https://app.pr4zka.online', 'http://localhost:3000'],
+      : [
+          'https://app.pr4zka.online',
+          'https://2kbarber.pr4zka.online',
+          'http://localhost:3000',
+          'http://localhost:4321',
+          'http://localhost:4322',
+        ],
     credentials: true,
   });
 

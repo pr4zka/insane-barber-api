@@ -18,11 +18,13 @@ import { CreditDebitNotesModule } from './modules/credit-debit-notes/credit-debi
 import { SalesBookModule } from './modules/sales-book/sales-book.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { PurchasesModule } from './modules/purchases/purchases.module';
+import { PublicModule } from './modules/public/public.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
+    PublicModule,
     AuthModule,
     UsersModule,
     ClientsModule,
