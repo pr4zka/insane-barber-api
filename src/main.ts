@@ -10,16 +10,21 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
+  const corsOrigins = process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(',')
+        .map((o) => o.trim())
+        .filter(Boolean)
+    : [
+        'https://app.pr4zka.online',
+        'https://2kbarber.pr4zka.online',
+        'http://localhost:3000',
+        'http://localhost:4321',
+        'http://localhost:4322',
+      ];
+  console.log('CORS origins:', corsOrigins);
+
   app.enableCors({
-    origin: process.env.CORS_ORIGINS
-      ? process.env.CORS_ORIGINS.split(',')
-      : [
-          'https://app.pr4zka.online',
-          'https://2kbarber.pr4zka.online',
-          'http://localhost:3000',
-          'http://localhost:4321',
-          'http://localhost:4322',
-        ],
+    origin: corsOrigins,
     credentials: true,
   });
 
