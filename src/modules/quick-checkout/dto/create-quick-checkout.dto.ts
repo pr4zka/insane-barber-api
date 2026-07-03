@@ -50,6 +50,16 @@ export class CreateQuickCheckoutDto {
   @MaxLength(200)
   otroServicio?: string;
 
+  @ApiPropertyOptional({ description: 'Fecha del turno (YYYY-MM-DD). Si no se envia, se usa la fecha actual del servidor.', example: '2026-07-03' })
+  @IsString()
+  @IsOptional()
+  fecha?: string;
+
+  @ApiPropertyOptional({ description: 'Hora del turno (HH:mm). Si no se envia, se usa la hora actual del servidor.', example: '17:24' })
+  @IsString()
+  @IsOptional()
+  hora?: string;
+
   @ApiProperty({ description: 'Precio total a cobrar en guaranies', example: 90000 })
   @IsNumber()
   @IsPositive()

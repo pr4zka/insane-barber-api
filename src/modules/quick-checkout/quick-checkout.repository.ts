@@ -146,12 +146,21 @@ export class QuickCheckoutRepository {
       // 8) Crear el turno ya "cobrado": es un walk-in que ya ocurrio, no una
       // reserva a futuro, asi que no pasa por pendiente/atendido ni corre el
       // chequeo de colision de horario (ese chequeo es para agendar a futuro).
-      const ahora = new Date();
-      const yyyy = ahora.getFullYear();
-      const mm = String(ahora.getMonth() + 1).padStart(2, '0');
-      const dd = String(ahora.getDate()).padStart(2, '0');
-      const fecha = new Date(`${yyyy}-${mm}-${dd}T00:00:00.000Z`);
-      const hora = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+      // Fecha/hora: se usan las que mande el barbero (por si carga el registro
+      // un rato despues de terminar el corte); si no vienen, se calcula "ahora".
+      let fecha: Date;
+      let hora: string;
+      if (dto.fecha && dto.hora) {
+        fecha = new Date(`${dto.fecha}T00:00:00.000Z`);
+        hora = dto.hora;
+      } else {
+        const ahora = new Date();
+        const yyyy = ahora.getFullYear();
+        const mm = String(ahora.getMonth() + 1).padStart(2, '0');
+        const dd = String(ahora.getDate()).padStart(2, '0');
+        fecha = new Date(`${yyyy}-${mm}-${dd}T00:00:00.000Z`);
+        hora = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+      }
 
       const turno = await tx.turno.create({
         data: {

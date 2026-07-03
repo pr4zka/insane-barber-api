@@ -4,6 +4,8 @@ export declare class CreateQuickCheckoutDto {
     clienteEmail?: string;
     servicioIds: number[];
     otroServicio?: string;
+    fecha?: string;
+    hora?: string;
     precioTotal: number;
     metodoPago: string;
     platformId?: number;

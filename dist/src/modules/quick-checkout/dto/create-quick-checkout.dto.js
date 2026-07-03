@@ -56,6 +56,18 @@ __decorate([
     __metadata("design:type", String)
 ], CreateQuickCheckoutDto.prototype, "otroServicio", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Fecha del turno (YYYY-MM-DD). Si no se envia, se usa la fecha actual del servidor.', example: '2026-07-03' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateQuickCheckoutDto.prototype, "fecha", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Hora del turno (HH:mm). Si no se envia, se usa la hora actual del servidor.', example: '17:24' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateQuickCheckoutDto.prototype, "hora", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ description: 'Precio total a cobrar en guaranies', example: 90000 }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
