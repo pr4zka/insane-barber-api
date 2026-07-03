@@ -49,17 +49,36 @@ let QuickCheckoutRepository = class QuickCheckoutRepository {
                 nombresServicios.push(dto.otroServicio.trim());
             }
             const observacion = nombresServicios.join(' + ');
-            let cliente = await tx.cliente.findFirst({
-                where: { telefono: dto.clienteTelefono },
-            });
-            if (!cliente) {
-                cliente = await tx.cliente.create({
+            let cliente;
+            if (dto.clienteId) {
+                const existente = await tx.cliente.findUnique({
+                    where: { id: dto.clienteId },
+                });
+                if (!existente) {
+                    throw new common_1.BadRequestException('El cliente seleccionado no existe. Actualice la pantalla e intente nuevamente.');
+                }
+                cliente = await tx.cliente.update({
+                    where: { id: dto.clienteId },
                     data: {
                         nombre: dto.clienteNombre,
                         telefono: dto.clienteTelefono,
                         email: dto.clienteEmail ?? null,
                     },
                 });
+            }
+            else {
+                cliente = await tx.cliente.findFirst({
+                    where: { telefono: dto.clienteTelefono },
+                });
+                if (!cliente) {
+                    cliente = await tx.cliente.create({
+                        data: {
+                            nombre: dto.clienteNombre,
+                            telefono: dto.clienteTelefono,
+                            email: dto.clienteEmail ?? null,
+                        },
+                    });
+                }
             }
             let montoFinal = dto.precioTotal;
             let montoOriginal = null;

@@ -1,4 +1,5 @@
 export declare class CreateQuickCheckoutDto {
+    clienteId?: number;
     clienteNombre: string;
     clienteTelefono: string;
     clienteEmail?: string;

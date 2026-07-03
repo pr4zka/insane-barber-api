@@ -16,6 +16,15 @@ class CreateQuickCheckoutDto {
 }
 exports.CreateQuickCheckoutDto = CreateQuickCheckoutDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'ID de un cliente ya existente (elegido del buscador). Si se envia, se actualiza ese cliente con clienteNombre/clienteTelefono/clienteEmail en vez de buscar/crear por telefono.',
+        example: 12,
+    }),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateQuickCheckoutDto.prototype, "clienteId", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ description: 'Nombre y apellido del cliente', example: 'Juan Perez' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),

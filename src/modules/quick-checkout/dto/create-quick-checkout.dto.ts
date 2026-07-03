@@ -14,6 +14,15 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateQuickCheckoutDto {
+  @ApiPropertyOptional({
+    description:
+      'ID de un cliente ya existente (elegido del buscador). Si se envia, se actualiza ese cliente con clienteNombre/clienteTelefono/clienteEmail en vez de buscar/crear por telefono.',
+    example: 12,
+  })
+  @IsInt()
+  @IsOptional()
+  clienteId?: number;
+
   @ApiProperty({ description: 'Nombre y apellido del cliente', example: 'Juan Perez' })
   @IsString()
   @IsNotEmpty()

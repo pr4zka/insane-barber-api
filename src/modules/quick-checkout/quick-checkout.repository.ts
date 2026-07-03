@@ -70,20 +70,42 @@ export class QuickCheckoutRepository {
       }
       const observacion = nombresServicios.join(' + ');
 
-      // 6) Cliente: reutilizar por telefono, o crear. No se sobreescribe
-      // nombre/email de un cliente ya existente (evita que un typo del
-      // barbero corrompa un registro cargado por recepcion).
-      let cliente = await tx.cliente.findFirst({
-        where: { telefono: dto.clienteTelefono },
-      });
-      if (!cliente) {
-        cliente = await tx.cliente.create({
+      // 6) Cliente. Si el barbero eligio uno del buscador (clienteId), se
+      // actualiza con los datos del formulario (permite corregir datos
+      // viejos). Si no, se reutiliza por telefono o se crea uno nuevo, sin
+      // sobreescribir nombre/email de un cliente ya existente (evita que un
+      // typo del barbero corrompa un registro cargado por recepcion).
+      let cliente;
+      if (dto.clienteId) {
+        const existente = await tx.cliente.findUnique({
+          where: { id: dto.clienteId },
+        });
+        if (!existente) {
+          throw new BadRequestException(
+            'El cliente seleccionado no existe. Actualice la pantalla e intente nuevamente.',
+          );
+        }
+        cliente = await tx.cliente.update({
+          where: { id: dto.clienteId },
           data: {
             nombre: dto.clienteNombre,
             telefono: dto.clienteTelefono,
             email: dto.clienteEmail ?? null,
           },
         });
+      } else {
+        cliente = await tx.cliente.findFirst({
+          where: { telefono: dto.clienteTelefono },
+        });
+        if (!cliente) {
+          cliente = await tx.cliente.create({
+            data: {
+              nombre: dto.clienteNombre,
+              telefono: dto.clienteTelefono,
+              email: dto.clienteEmail ?? null,
+            },
+          });
+        }
       }
 
       // 7) Aplicar promocion o descuento (mismo calculo que PaymentsRepository).
