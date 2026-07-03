@@ -9,10 +9,20 @@ const decimal_transform_interceptor_1 = require("./common/interceptors/decimal-t
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.setGlobalPrefix('api');
+    const corsOrigins = process.env.CORS_ORIGINS
+        ? process.env.CORS_ORIGINS.split(',')
+            .map((o) => o.trim())
+            .filter(Boolean)
+        : [
+            'https://app.pr4zka.online',
+            'https://2kbarber.pr4zka.online',
+            'http://localhost:3000',
+            'http://localhost:4321',
+            'http://localhost:4322',
+        ];
+    console.log('CORS origins:', corsOrigins);
     app.enableCors({
-        origin: process.env.CORS_ORIGINS
-            ? process.env.CORS_ORIGINS.split(',')
-            : ['https://app.pr4zka.online', 'http://localhost:3000'],
+        origin: corsOrigins,
         credentials: true,
     });
     app.useGlobalPipes(new common_1.ValidationPipe({
@@ -45,6 +55,7 @@ async function bootstrap() {
         .addTag('Credit Debit Notes', 'Notas de credito y debito')
         .addTag('Sales Book', 'Libro de ventas')
         .addTag('Reports', 'Reportes e informes')
+        .addTag('Quick Checkout', 'Flujo rapido de cliente + cobro para barberos')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api/docs', app, document, {

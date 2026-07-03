@@ -68,6 +68,7 @@ async function bootstrap() {
     .addTag('Credit Debit Notes', 'Notas de credito y debito')
     .addTag('Sales Book', 'Libro de ventas')
     .addTag('Reports', 'Reportes e informes')
+    .addTag('Quick Checkout', 'Flujo rapido de cliente + cobro para barberos')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

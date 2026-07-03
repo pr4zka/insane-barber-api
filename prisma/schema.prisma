@@ -35,11 +35,12 @@ model Usuario {
 }
 
 model Cliente {
-  id            Int      @id @default(autoincrement())
-  nombre        String   @db.VarChar(100)
-  telefono      String   @db.VarChar(30)
-  email         String   @db.VarChar(150)
-  fechaRegistro DateTime @default(now()) @map("fecha_registro")
+  id              Int      @id @default(autoincrement())
+  nombre          String   @db.VarChar(100)
+  telefono        String   @db.VarChar(30)
+  email           String?  @db.VarChar(150)
+  cortesFidelidad Int      @default(0) @map("cortes_fidelidad")
+  fechaRegistro   DateTime @default(now()) @map("fecha_registro")
 
   turnos       Turno[]
   reclamos     Reclamo[]

@@ -66,6 +66,7 @@ export declare const ClienteScalarFieldEnum: {
     readonly nombre: "nombre";
     readonly telefono: "telefono";
     readonly email: "email";
+    readonly cortesFidelidad: "cortesFidelidad";
     readonly fechaRegistro: "fechaRegistro";
 };
 export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeof ClienteScalarFieldEnum];

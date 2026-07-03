@@ -19,6 +19,7 @@ import { SalesBookModule } from './modules/sales-book/sales-book.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { PurchasesModule } from './modules/purchases/purchases.module';
 import { PublicModule } from './modules/public/public.module';
+import { QuickCheckoutModule } from './modules/quick-checkout/quick-checkout.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { PublicModule } from './modules/public/public.module';
     SalesBookModule,
     ReportsModule,
     PurchasesModule,
+    QuickCheckoutModule,
   ],
 })
 export class AppModule {}

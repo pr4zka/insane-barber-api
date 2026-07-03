@@ -537,9 +537,6 @@ export type PagoUncheckedUpdateManyWithoutDescuentoNestedInput = {
     updateMany?: Prisma.PagoUpdateManyWithWhereWithoutDescuentoInput | Prisma.PagoUpdateManyWithWhereWithoutDescuentoInput[];
     deleteMany?: Prisma.PagoScalarWhereInput | Prisma.PagoScalarWhereInput[];
 };
-export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null;
-};
 export type PagoCreateNestedOneWithoutNotasInput = {
     create?: Prisma.XOR<Prisma.PagoCreateWithoutNotasInput, Prisma.PagoUncheckedCreateWithoutNotasInput>;
     connectOrCreate?: Prisma.PagoCreateOrConnectWithoutNotasInput;

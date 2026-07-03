@@ -27,6 +27,8 @@ const credit_debit_notes_module_1 = require("./modules/credit-debit-notes/credit
 const sales_book_module_1 = require("./modules/sales-book/sales-book.module");
 const reports_module_1 = require("./modules/reports/reports.module");
 const purchases_module_1 = require("./modules/purchases/purchases.module");
+const public_module_1 = require("./modules/public/public.module");
+const quick_checkout_module_1 = require("./modules/quick-checkout/quick-checkout.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({ isGlobal: true }),
             prisma_module_1.PrismaModule,
+            public_module_1.PublicModule,
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
             clients_module_1.ClientsModule,
@@ -52,6 +55,7 @@ exports.AppModule = AppModule = __decorate([
             sales_book_module_1.SalesBookModule,
             reports_module_1.ReportsModule,
             purchases_module_1.PurchasesModule,
+            quick_checkout_module_1.QuickCheckoutModule,
         ],
     })
 ], AppModule);

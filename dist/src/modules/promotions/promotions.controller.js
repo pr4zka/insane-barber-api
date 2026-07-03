@@ -38,7 +38,7 @@ let PromotionsController = class PromotionsController {
 exports.PromotionsController = PromotionsController;
 __decorate([
     (0, common_1.Get)(),
-    (0, roles_decorator_1.Roles)('administrador', 'recepcionista'),
+    (0, roles_decorator_1.Roles)('administrador', 'recepcionista', 'barbero'),
     (0, swagger_1.ApiOperation)({ summary: 'Listar todas las promociones' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista de promociones' }),
     __metadata("design:type", Function),

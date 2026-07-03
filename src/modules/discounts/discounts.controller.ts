@@ -20,7 +20,7 @@ export class DiscountsController {
   constructor(private readonly discountsService: DiscountsService) {}
 
   @Get()
-  @Roles('administrador', 'recepcionista')
+  @Roles('administrador', 'recepcionista', 'barbero')
   @ApiOperation({ summary: 'Listar todos los descuentos' })
   @ApiResponse({ status: 200, description: 'Lista de descuentos' })
   findAll() {

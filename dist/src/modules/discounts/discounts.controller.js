@@ -34,7 +34,7 @@ let DiscountsController = class DiscountsController {
 exports.DiscountsController = DiscountsController;
 __decorate([
     (0, common_1.Get)(),
-    (0, roles_decorator_1.Roles)('administrador', 'recepcionista'),
+    (0, roles_decorator_1.Roles)('administrador', 'recepcionista', 'barbero'),
     (0, swagger_1.ApiOperation)({ summary: 'Listar todos los descuentos' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista de descuentos' }),
     __metadata("design:type", Function),

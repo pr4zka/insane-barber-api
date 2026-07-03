@@ -24,7 +24,7 @@ export class PromotionsController {
   constructor(private readonly promotionsService: PromotionsService) {}
 
   @Get()
-  @Roles('administrador', 'recepcionista')
+  @Roles('administrador', 'recepcionista', 'barbero')
   @ApiOperation({ summary: 'Listar todas las promociones' })
   @ApiResponse({ status: 200, description: 'Lista de promociones' })
   findAll() {

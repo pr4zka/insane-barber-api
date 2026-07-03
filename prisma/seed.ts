@@ -61,6 +61,19 @@ async function main() {
 
   console.log('Users created:', { admin: admin.email, recep: recep.email });
 
+  // Barbero user (se crea antes que el Barbero para poder enlazar usuarioId)
+  const carlosUser = await prisma.usuario.upsert({
+    where: { email: 'carlos@insanebarber.com' },
+    update: {},
+    create: {
+      nombre: 'Carlos Lopez',
+      email: 'carlos@insanebarber.com',
+      password: await bcrypt.hash('barbero123', 10),
+      rolId: barberoRole.id,
+      estado: true,
+    },
+  });
+
   // Barbers
   const barbero1 = await prisma.barbero.create({
     data: {
@@ -68,6 +81,7 @@ async function main() {
       telefono: '0981123456',
       especialidad: 'Corte clasico',
       estado: true,
+      usuarioId: carlosUser.id,
     },
   });
 
@@ -76,19 +90,6 @@ async function main() {
       nombre: 'Miguel Torres',
       telefono: '0982654321',
       especialidad: 'Barba y afeitado',
-      estado: true,
-    },
-  });
-
-  // Barbero user
-  await prisma.usuario.upsert({
-    where: { email: 'carlos@insanebarber.com' },
-    update: {},
-    create: {
-      nombre: 'Carlos Lopez',
-      email: 'carlos@insanebarber.com',
-      password: await bcrypt.hash('barbero123', 10),
-      rolId: barberoRole.id,
       estado: true,
     },
   });

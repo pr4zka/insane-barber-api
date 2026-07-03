@@ -10,15 +10,18 @@ export type AggregateCliente = {
 };
 export type ClienteAvgAggregateOutputType = {
     id: number | null;
+    cortesFidelidad: number | null;
 };
 export type ClienteSumAggregateOutputType = {
     id: number | null;
+    cortesFidelidad: number | null;
 };
 export type ClienteMinAggregateOutputType = {
     id: number | null;
     nombre: string | null;
     telefono: string | null;
     email: string | null;
+    cortesFidelidad: number | null;
     fechaRegistro: Date | null;
 };
 export type ClienteMaxAggregateOutputType = {
@@ -26,6 +29,7 @@ export type ClienteMaxAggregateOutputType = {
     nombre: string | null;
     telefono: string | null;
     email: string | null;
+    cortesFidelidad: number | null;
     fechaRegistro: Date | null;
 };
 export type ClienteCountAggregateOutputType = {
@@ -33,20 +37,24 @@ export type ClienteCountAggregateOutputType = {
     nombre: number;
     telefono: number;
     email: number;
+    cortesFidelidad: number;
     fechaRegistro: number;
     _all: number;
 };
 export type ClienteAvgAggregateInputType = {
     id?: true;
+    cortesFidelidad?: true;
 };
 export type ClienteSumAggregateInputType = {
     id?: true;
+    cortesFidelidad?: true;
 };
 export type ClienteMinAggregateInputType = {
     id?: true;
     nombre?: true;
     telefono?: true;
     email?: true;
+    cortesFidelidad?: true;
     fechaRegistro?: true;
 };
 export type ClienteMaxAggregateInputType = {
@@ -54,6 +62,7 @@ export type ClienteMaxAggregateInputType = {
     nombre?: true;
     telefono?: true;
     email?: true;
+    cortesFidelidad?: true;
     fechaRegistro?: true;
 };
 export type ClienteCountAggregateInputType = {
@@ -61,6 +70,7 @@ export type ClienteCountAggregateInputType = {
     nombre?: true;
     telefono?: true;
     email?: true;
+    cortesFidelidad?: true;
     fechaRegistro?: true;
     _all?: true;
 };
@@ -96,7 +106,8 @@ export type ClienteGroupByOutputType = {
     id: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email: string | null;
+    cortesFidelidad: number;
     fechaRegistro: Date;
     _count: ClienteCountAggregateOutputType | null;
     _avg: ClienteAvgAggregateOutputType | null;
@@ -114,7 +125,8 @@ export type ClienteWhereInput = {
     id?: Prisma.IntFilter<"Cliente"> | number;
     nombre?: Prisma.StringFilter<"Cliente"> | string;
     telefono?: Prisma.StringFilter<"Cliente"> | string;
-    email?: Prisma.StringFilter<"Cliente"> | string;
+    email?: Prisma.StringNullableFilter<"Cliente"> | string | null;
+    cortesFidelidad?: Prisma.IntFilter<"Cliente"> | number;
     fechaRegistro?: Prisma.DateTimeFilter<"Cliente"> | Date | string;
     turnos?: Prisma.TurnoListRelationFilter;
     reclamos?: Prisma.ReclamoListRelationFilter;
@@ -124,7 +136,8 @@ export type ClienteOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
-    email?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
     fechaRegistro?: Prisma.SortOrder;
     turnos?: Prisma.TurnoOrderByRelationAggregateInput;
     reclamos?: Prisma.ReclamoOrderByRelationAggregateInput;
@@ -137,7 +150,8 @@ export type ClienteWhereUniqueInput = Prisma.AtLeast<{
     NOT?: Prisma.ClienteWhereInput | Prisma.ClienteWhereInput[];
     nombre?: Prisma.StringFilter<"Cliente"> | string;
     telefono?: Prisma.StringFilter<"Cliente"> | string;
-    email?: Prisma.StringFilter<"Cliente"> | string;
+    email?: Prisma.StringNullableFilter<"Cliente"> | string | null;
+    cortesFidelidad?: Prisma.IntFilter<"Cliente"> | number;
     fechaRegistro?: Prisma.DateTimeFilter<"Cliente"> | Date | string;
     turnos?: Prisma.TurnoListRelationFilter;
     reclamos?: Prisma.ReclamoListRelationFilter;
@@ -147,7 +161,8 @@ export type ClienteOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
-    email?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
     fechaRegistro?: Prisma.SortOrder;
     _count?: Prisma.ClienteCountOrderByAggregateInput;
     _avg?: Prisma.ClienteAvgOrderByAggregateInput;
@@ -162,13 +177,15 @@ export type ClienteScalarWhereWithAggregatesInput = {
     id?: Prisma.IntWithAggregatesFilter<"Cliente"> | number;
     nombre?: Prisma.StringWithAggregatesFilter<"Cliente"> | string;
     telefono?: Prisma.StringWithAggregatesFilter<"Cliente"> | string;
-    email?: Prisma.StringWithAggregatesFilter<"Cliente"> | string;
+    email?: Prisma.StringNullableWithAggregatesFilter<"Cliente"> | string | null;
+    cortesFidelidad?: Prisma.IntWithAggregatesFilter<"Cliente"> | number;
     fechaRegistro?: Prisma.DateTimeWithAggregatesFilter<"Cliente"> | Date | string;
 };
 export type ClienteCreateInput = {
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoCreateNestedManyWithoutClienteInput;
     reclamos?: Prisma.ReclamoCreateNestedManyWithoutClienteInput;
@@ -178,7 +195,8 @@ export type ClienteUncheckedCreateInput = {
     id?: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoUncheckedCreateNestedManyWithoutClienteInput;
     reclamos?: Prisma.ReclamoUncheckedCreateNestedManyWithoutClienteInput;
@@ -187,7 +205,8 @@ export type ClienteUncheckedCreateInput = {
 export type ClienteUpdateInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUpdateManyWithoutClienteNestedInput;
     reclamos?: Prisma.ReclamoUpdateManyWithoutClienteNestedInput;
@@ -197,7 +216,8 @@ export type ClienteUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUncheckedUpdateManyWithoutClienteNestedInput;
     reclamos?: Prisma.ReclamoUncheckedUpdateManyWithoutClienteNestedInput;
@@ -207,20 +227,23 @@ export type ClienteCreateManyInput = {
     id?: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
 };
 export type ClienteUpdateManyMutationInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ClienteUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ClienteCountOrderByAggregateInput = {
@@ -228,16 +251,19 @@ export type ClienteCountOrderByAggregateInput = {
     nombre?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
     fechaRegistro?: Prisma.SortOrder;
 };
 export type ClienteAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
 };
 export type ClienteMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     nombre?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
     fechaRegistro?: Prisma.SortOrder;
 };
 export type ClienteMinOrderByAggregateInput = {
@@ -245,14 +271,19 @@ export type ClienteMinOrderByAggregateInput = {
     nombre?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
     fechaRegistro?: Prisma.SortOrder;
 };
 export type ClienteSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
+    cortesFidelidad?: Prisma.SortOrder;
 };
 export type ClienteScalarRelationFilter = {
     is?: Prisma.ClienteWhereInput;
     isNot?: Prisma.ClienteWhereInput;
+};
+export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null;
 };
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
@@ -296,7 +327,8 @@ export type ClienteUpdateOneRequiredWithoutPresupuestosNestedInput = {
 export type ClienteCreateWithoutTurnosInput = {
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     reclamos?: Prisma.ReclamoCreateNestedManyWithoutClienteInput;
     presupuestos?: Prisma.PresupuestoCreateNestedManyWithoutClienteInput;
@@ -305,7 +337,8 @@ export type ClienteUncheckedCreateWithoutTurnosInput = {
     id?: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     reclamos?: Prisma.ReclamoUncheckedCreateNestedManyWithoutClienteInput;
     presupuestos?: Prisma.PresupuestoUncheckedCreateNestedManyWithoutClienteInput;
@@ -326,7 +359,8 @@ export type ClienteUpdateToOneWithWhereWithoutTurnosInput = {
 export type ClienteUpdateWithoutTurnosInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     reclamos?: Prisma.ReclamoUpdateManyWithoutClienteNestedInput;
     presupuestos?: Prisma.PresupuestoUpdateManyWithoutClienteNestedInput;
@@ -335,7 +369,8 @@ export type ClienteUncheckedUpdateWithoutTurnosInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     reclamos?: Prisma.ReclamoUncheckedUpdateManyWithoutClienteNestedInput;
     presupuestos?: Prisma.PresupuestoUncheckedUpdateManyWithoutClienteNestedInput;
@@ -343,7 +378,8 @@ export type ClienteUncheckedUpdateWithoutTurnosInput = {
 export type ClienteCreateWithoutReclamosInput = {
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoCreateNestedManyWithoutClienteInput;
     presupuestos?: Prisma.PresupuestoCreateNestedManyWithoutClienteInput;
@@ -352,7 +388,8 @@ export type ClienteUncheckedCreateWithoutReclamosInput = {
     id?: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoUncheckedCreateNestedManyWithoutClienteInput;
     presupuestos?: Prisma.PresupuestoUncheckedCreateNestedManyWithoutClienteInput;
@@ -373,7 +410,8 @@ export type ClienteUpdateToOneWithWhereWithoutReclamosInput = {
 export type ClienteUpdateWithoutReclamosInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUpdateManyWithoutClienteNestedInput;
     presupuestos?: Prisma.PresupuestoUpdateManyWithoutClienteNestedInput;
@@ -382,7 +420,8 @@ export type ClienteUncheckedUpdateWithoutReclamosInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUncheckedUpdateManyWithoutClienteNestedInput;
     presupuestos?: Prisma.PresupuestoUncheckedUpdateManyWithoutClienteNestedInput;
@@ -390,7 +429,8 @@ export type ClienteUncheckedUpdateWithoutReclamosInput = {
 export type ClienteCreateWithoutPresupuestosInput = {
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoCreateNestedManyWithoutClienteInput;
     reclamos?: Prisma.ReclamoCreateNestedManyWithoutClienteInput;
@@ -399,7 +439,8 @@ export type ClienteUncheckedCreateWithoutPresupuestosInput = {
     id?: number;
     nombre: string;
     telefono: string;
-    email: string;
+    email?: string | null;
+    cortesFidelidad?: number;
     fechaRegistro?: Date | string;
     turnos?: Prisma.TurnoUncheckedCreateNestedManyWithoutClienteInput;
     reclamos?: Prisma.ReclamoUncheckedCreateNestedManyWithoutClienteInput;
@@ -420,7 +461,8 @@ export type ClienteUpdateToOneWithWhereWithoutPresupuestosInput = {
 export type ClienteUpdateWithoutPresupuestosInput = {
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUpdateManyWithoutClienteNestedInput;
     reclamos?: Prisma.ReclamoUpdateManyWithoutClienteNestedInput;
@@ -429,7 +471,8 @@ export type ClienteUncheckedUpdateWithoutPresupuestosInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     nombre?: Prisma.StringFieldUpdateOperationsInput | string;
     telefono?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cortesFidelidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fechaRegistro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     turnos?: Prisma.TurnoUncheckedUpdateManyWithoutClienteNestedInput;
     reclamos?: Prisma.ReclamoUncheckedUpdateManyWithoutClienteNestedInput;
@@ -461,6 +504,7 @@ export type ClienteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     nombre?: boolean;
     telefono?: boolean;
     email?: boolean;
+    cortesFidelidad?: boolean;
     fechaRegistro?: boolean;
     turnos?: boolean | Prisma.Cliente$turnosArgs<ExtArgs>;
     reclamos?: boolean | Prisma.Cliente$reclamosArgs<ExtArgs>;
@@ -472,6 +516,7 @@ export type ClienteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
     nombre?: boolean;
     telefono?: boolean;
     email?: boolean;
+    cortesFidelidad?: boolean;
     fechaRegistro?: boolean;
 }, ExtArgs["result"]["cliente"]>;
 export type ClienteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -479,6 +524,7 @@ export type ClienteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
     nombre?: boolean;
     telefono?: boolean;
     email?: boolean;
+    cortesFidelidad?: boolean;
     fechaRegistro?: boolean;
 }, ExtArgs["result"]["cliente"]>;
 export type ClienteSelectScalar = {
@@ -486,9 +532,10 @@ export type ClienteSelectScalar = {
     nombre?: boolean;
     telefono?: boolean;
     email?: boolean;
+    cortesFidelidad?: boolean;
     fechaRegistro?: boolean;
 };
-export type ClienteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "telefono" | "email" | "fechaRegistro", ExtArgs["result"]["cliente"]>;
+export type ClienteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "telefono" | "email" | "cortesFidelidad" | "fechaRegistro", ExtArgs["result"]["cliente"]>;
 export type ClienteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     turnos?: boolean | Prisma.Cliente$turnosArgs<ExtArgs>;
     reclamos?: boolean | Prisma.Cliente$reclamosArgs<ExtArgs>;
@@ -508,7 +555,8 @@ export type $ClientePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
         id: number;
         nombre: string;
         telefono: string;
-        email: string;
+        email: string | null;
+        cortesFidelidad: number;
         fechaRegistro: Date;
     }, ExtArgs["result"]["cliente"]>;
     composites: {};
@@ -574,6 +622,7 @@ export interface ClienteFieldRefs {
     readonly nombre: Prisma.FieldRef<"Cliente", 'String'>;
     readonly telefono: Prisma.FieldRef<"Cliente", 'String'>;
     readonly email: Prisma.FieldRef<"Cliente", 'String'>;
+    readonly cortesFidelidad: Prisma.FieldRef<"Cliente", 'Int'>;
     readonly fechaRegistro: Prisma.FieldRef<"Cliente", 'DateTime'>;
 }
 export type ClienteFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {

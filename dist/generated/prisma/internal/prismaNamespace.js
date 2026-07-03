@@ -78,6 +78,7 @@ exports.ClienteScalarFieldEnum = {
     nombre: 'nombre',
     telefono: 'telefono',
     email: 'email',
+    cortesFidelidad: 'cortesFidelidad',
     fechaRegistro: 'fechaRegistro'
 };
 exports.BarberoScalarFieldEnum = {
