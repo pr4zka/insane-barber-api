@@ -129,6 +129,17 @@ let QuickCheckoutRepository = class QuickCheckoutRepository {
                 }
                 descuentoId = descuento.id;
             }
+            let fidelidadGratisAplicada = false;
+            if (!promocionId &&
+                !descuentoId &&
+                incluyeCorte &&
+                cliente.cortesFidelidad > 0 &&
+                cliente.cortesFidelidad % 4 === 0) {
+                montoOriginal = dto.precioTotal;
+                porcentajeAplicado = 100;
+                montoFinal = 0;
+                fidelidadGratisAplicada = true;
+            }
             let fecha;
             let hora;
             if (dto.fecha && dto.hora) {
@@ -166,7 +177,10 @@ let QuickCheckoutRepository = class QuickCheckoutRepository {
                 },
             });
             const conceptoParts = [observacion || 'Pago de servicio'];
-            if (porcentajeAplicado) {
+            if (fidelidadGratisAplicada) {
+                conceptoParts.push('(fidelidad 4 cortes: gratis)');
+            }
+            else if (porcentajeAplicado) {
                 conceptoParts.push(`(${porcentajeAplicado}% ${promocionId ? 'promo' : 'desc'})`);
             }
             else if (montoOriginal !== null && montoOriginal > montoFinal) {
@@ -209,6 +223,7 @@ let QuickCheckoutRepository = class QuickCheckoutRepository {
                     meta: 4,
                     completoEsteCiclo: progreso === 4,
                     incluyoCorteEnEsteTurno: incluyeCorte,
+                    gratisAplicado: fidelidadGratisAplicada,
                 },
             };
         });

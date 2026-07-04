@@ -165,6 +165,25 @@ export class QuickCheckoutRepository {
         descuentoId = descuento.id;
       }
 
+      // 7b) Fidelidad "4 cortes": si el cliente ya completo un ciclo (su
+      // contador acumulado, ANTES de este turno, es multiplo de 4) y el
+      // barbero no eligio una promocion/descuento a mano, este corte se
+      // cobra gratis automaticamente. Si ya eligieron algo manual, se
+      // respeta esa eleccion y no se pisa con el automatico.
+      let fidelidadGratisAplicada = false;
+      if (
+        !promocionId &&
+        !descuentoId &&
+        incluyeCorte &&
+        cliente.cortesFidelidad > 0 &&
+        cliente.cortesFidelidad % 4 === 0
+      ) {
+        montoOriginal = dto.precioTotal;
+        porcentajeAplicado = 100;
+        montoFinal = 0;
+        fidelidadGratisAplicada = true;
+      }
+
       // 8) Crear el turno ya "cobrado": es un walk-in que ya ocurrio, no una
       // reserva a futuro, asi que no pasa por pendiente/atendido ni corre el
       // chequeo de colision de horario (ese chequeo es para agendar a futuro).
@@ -211,7 +230,9 @@ export class QuickCheckoutRepository {
 
       // 10) Movimiento de caja + libro de ventas (mismo patron que Payments).
       const conceptoParts = [observacion || 'Pago de servicio'];
-      if (porcentajeAplicado) {
+      if (fidelidadGratisAplicada) {
+        conceptoParts.push('(fidelidad 4 cortes: gratis)');
+      } else if (porcentajeAplicado) {
         conceptoParts.push(`(${porcentajeAplicado}% ${promocionId ? 'promo' : 'desc'})`);
       } else if (montoOriginal !== null && montoOriginal > montoFinal) {
         const descGs = montoOriginal - montoFinal;
@@ -259,6 +280,7 @@ export class QuickCheckoutRepository {
           meta: 4,
           completoEsteCiclo: progreso === 4,
           incluyoCorteEnEsteTurno: incluyeCorte,
+          gratisAplicado: fidelidadGratisAplicada,
         },
       };
     });
