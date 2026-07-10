@@ -15,15 +15,16 @@ const prisma_service_1 = require("../../prisma/prisma.service");
 let PublicService = class PublicService {
     constructor(prisma) {
         this.prisma = prisma;
-        this.OPEN = 9;
-        this.CLOSE = 20;
+        this.OPEN_MIN = 18 * 60;
+        this.CLOSE_MIN = 24 * 60;
+        this.DURACION_MIN = 45;
     }
     buildSlots() {
         const slots = [];
-        for (let h = this.OPEN; h < this.CLOSE; h++) {
-            for (const m of ['00', '30']) {
-                slots.push(`${String(h).padStart(2, '0')}:${m}`);
-            }
+        for (let start = this.OPEN_MIN; start + this.DURACION_MIN <= this.CLOSE_MIN; start += this.DURACION_MIN) {
+            const h = Math.floor(start / 60);
+            const m = start % 60;
+            slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
         }
         return slots;
     }
@@ -39,25 +40,59 @@ let PublicService = class PublicService {
     }
     async getHorarios(fechaISO) {
         const fecha = this.parseFecha(fechaISO);
-        const totalBarberos = Math.max(await this.prisma.barbero.count({ where: { estado: true } }), 1);
         const turnos = await this.prisma.turno.findMany({
             where: { fecha, estado: { not: 'cancelado' } },
             select: { hora: true },
         });
-        const ocupadosPorHora = {};
-        for (const t of turnos) {
-            ocupadosPorHora[t.hora] = (ocupadosPorHora[t.hora] || 0) + 1;
-        }
+        const ocupados = new Set(turnos.map((t) => t.hora));
         return this.buildSlots().map((hora) => ({
             hora,
-            disponible: (ocupadosPorHora[hora] || 0) < totalBarberos,
+            disponible: !ocupados.has(hora),
         }));
+    }
+    soloDigitos(tel) {
+        return (tel || '').replace(/\D/g, '');
+    }
+    mismoTelefono(rawA, digitosB) {
+        const a = this.soloDigitos(rawA);
+        if (a.length < 8 || digitosB.length < 8)
+            return a !== '' && a === digitosB;
+        return a.slice(-8) === digitosB.slice(-8);
+    }
+    async buscarClienteExistente(correo, numero) {
+        const correoNorm = (correo || '').trim();
+        const telDigitos = this.soloDigitos(numero);
+        if (correoNorm) {
+            const porEmail = await this.prisma.cliente.findFirst({
+                where: { email: { equals: correoNorm, mode: 'insensitive' } },
+            });
+            if (porEmail)
+                return porEmail;
+        }
+        if (telDigitos.length >= 8) {
+            const candidatos = await this.prisma.cliente.findMany({
+                where: { telefono: { not: '' } },
+                select: { id: true, telefono: true },
+            });
+            const match = candidatos.find((c) => this.mismoTelefono(c.telefono, telDigitos));
+            if (match) {
+                return this.prisma.cliente.findUnique({ where: { id: match.id } });
+            }
+        }
+        return null;
     }
     async crearTurno(dto) {
         const fecha = this.parseFecha(dto.fecha);
-        let cliente = await this.prisma.cliente.findFirst({
-            where: { email: dto.correo },
+        if (!this.buildSlots().includes(dto.hora)) {
+            throw new common_1.BadRequestException('Ese horario no es válido. Elegí uno de la agenda.');
+        }
+        const yaReservado = await this.prisma.turno.findFirst({
+            where: { fecha, hora: dto.hora, estado: { not: 'cancelado' } },
         });
+        if (yaReservado) {
+            throw new common_1.ConflictException('Ese horario ya fue reservado. Elegí otro, por favor.');
+        }
+        let cliente = await this.buscarClienteExistente(dto.correo, dto.numero);
         if (!cliente) {
             cliente = await this.prisma.cliente.create({
                 data: {
@@ -80,36 +115,22 @@ let PublicService = class PublicService {
         }
         let barberoId = dto.barberoId;
         if (barberoId) {
-            const ocupado = await this.prisma.turno.findFirst({
-                where: {
-                    barberoId,
-                    fecha,
-                    hora: dto.hora,
-                    estado: { not: 'cancelado' },
-                },
+            const barbero = await this.prisma.barbero.findFirst({
+                where: { id: barberoId, estado: true },
             });
-            if (ocupado) {
-                throw new common_1.ConflictException('Ese barbero no esta disponible en ese horario. Probá otro.');
+            if (!barbero) {
+                throw new common_1.BadRequestException('El barbero indicado no está disponible.');
             }
         }
         else {
-            const barberos = await this.prisma.barbero.findMany({
+            const barbero = await this.prisma.barbero.findFirst({
                 where: { estado: true },
                 orderBy: { id: 'asc' },
             });
-            if (!barberos.length) {
+            if (!barbero) {
                 throw new common_1.BadRequestException('No hay barberos disponibles.');
             }
-            const ocupados = await this.prisma.turno.findMany({
-                where: { fecha, hora: dto.hora, estado: { not: 'cancelado' } },
-                select: { barberoId: true },
-            });
-            const ocupadosSet = new Set(ocupados.map((o) => o.barberoId));
-            const libre = barberos.find((b) => !ocupadosSet.has(b.id));
-            if (!libre) {
-                throw new common_1.ConflictException('No hay disponibilidad en ese horario. Elegí otro, por favor.');
-            }
-            barberoId = libre.id;
+            barberoId = barbero.id;
         }
         const turno = await this.prisma.turno.create({
             data: {

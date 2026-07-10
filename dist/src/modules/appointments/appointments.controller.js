@@ -66,7 +66,7 @@ __decorate([
 ], AppointmentsController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, roles_decorator_1.Roles)('administrador', 'recepcionista'),
+    (0, roles_decorator_1.Roles)('administrador', 'recepcionista', 'barbero'),
     (0, swagger_1.ApiOperation)({ summary: 'Actualizar una cita existente' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Cita actualizada exitosamente' }),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -77,7 +77,7 @@ __decorate([
 ], AppointmentsController.prototype, "update", null);
 __decorate([
     (0, common_1.Patch)(':id/confirm'),
-    (0, roles_decorator_1.Roles)('administrador', 'recepcionista'),
+    (0, roles_decorator_1.Roles)('administrador', 'recepcionista', 'barbero'),
     (0, swagger_1.ApiOperation)({ summary: 'Confirmar una cita' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Cita confirmada exitosamente' }),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -87,7 +87,7 @@ __decorate([
 ], AppointmentsController.prototype, "confirm", null);
 __decorate([
     (0, common_1.Patch)(':id/cancel'),
-    (0, roles_decorator_1.Roles)('administrador', 'recepcionista'),
+    (0, roles_decorator_1.Roles)('administrador', 'recepcionista', 'barbero'),
     (0, swagger_1.ApiOperation)({ summary: 'Cancelar una cita' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Cita cancelada exitosamente' }),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
