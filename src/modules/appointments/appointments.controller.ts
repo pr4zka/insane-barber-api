@@ -40,7 +40,7 @@ export class AppointmentsController {
   }
 
   @Patch(':id')
-  @Roles('administrador', 'recepcionista')
+  @Roles('administrador', 'recepcionista', 'barbero')
   @ApiOperation({ summary: 'Actualizar una cita existente' })
   @ApiResponse({ status: 200, description: 'Cita actualizada exitosamente' })
   update(
@@ -51,7 +51,7 @@ export class AppointmentsController {
   }
 
   @Patch(':id/confirm')
-  @Roles('administrador', 'recepcionista')
+  @Roles('administrador', 'recepcionista', 'barbero')
   @ApiOperation({ summary: 'Confirmar una cita' })
   @ApiResponse({ status: 200, description: 'Cita confirmada exitosamente' })
   confirm(@Param('id', ParseIntPipe) id: number) {
@@ -59,7 +59,7 @@ export class AppointmentsController {
   }
 
   @Patch(':id/cancel')
-  @Roles('administrador', 'recepcionista')
+  @Roles('administrador', 'recepcionista', 'barbero')
   @ApiOperation({ summary: 'Cancelar una cita' })
   @ApiResponse({ status: 200, description: 'Cita cancelada exitosamente' })
   cancel(@Param('id', ParseIntPipe) id: number) {
