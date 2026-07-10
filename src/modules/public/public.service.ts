@@ -63,6 +63,54 @@ export class PublicService {
     }));
   }
 
+  /** Deja solo los digitos de un telefono (ignora +, espacios, guiones, etc.). */
+  private soloDigitos(tel?: string): string {
+    return (tel || '').replace(/\D/g, '');
+  }
+
+  /**
+   * Dos telefonos son "el mismo" si coinciden sus ultimos 8 digitos, asi
+   * "+595 981 123 456", "0981 123 456" y "981123456" cuentan como iguales.
+   */
+  private mismoTelefono(rawA: string, digitosB: string): boolean {
+    const a = this.soloDigitos(rawA);
+    if (a.length < 8 || digitosB.length < 8) return a !== '' && a === digitosB;
+    return a.slice(-8) === digitosB.slice(-8);
+  }
+
+  /**
+   * Busca un cliente ya registrado por email (case-insensitive) o por telefono
+   * (normalizado). Devuelve null si no existe. Evita clientes duplicados.
+   */
+  private async buscarClienteExistente(correo?: string, numero?: string) {
+    const correoNorm = (correo || '').trim();
+    const telDigitos = this.soloDigitos(numero);
+
+    // 1) Coincidencia por email (rapida, ignora mayus/minus).
+    if (correoNorm) {
+      const porEmail = await this.prisma.cliente.findFirst({
+        where: { email: { equals: correoNorm, mode: 'insensitive' } },
+      });
+      if (porEmail) return porEmail;
+    }
+
+    // 2) Coincidencia por telefono normalizado (ultimos 8 digitos).
+    if (telDigitos.length >= 8) {
+      const candidatos = await this.prisma.cliente.findMany({
+        where: { telefono: { not: '' } },
+        select: { id: true, telefono: true },
+      });
+      const match = candidatos.find((c) =>
+        this.mismoTelefono(c.telefono, telDigitos),
+      );
+      if (match) {
+        return this.prisma.cliente.findUnique({ where: { id: match.id } });
+      }
+    }
+
+    return null;
+  }
+
   /** Crea (o reutiliza) el cliente y agenda un turno en estado "pendiente". */
   async crearTurno(dto: CreatePublicTurnoDto) {
     const fecha = this.parseFecha(dto.fecha);
@@ -84,10 +132,9 @@ export class PublicService {
       );
     }
 
-    // 1) Cliente: reutilizar por email, o crear.
-    let cliente = await this.prisma.cliente.findFirst({
-      where: { email: dto.correo },
-    });
+    // 1) Cliente: buscar por email O telefono para NO duplicar. Si ya existe,
+    //    se le agenda la cita con su registro actual (no se crea uno nuevo).
+    let cliente = await this.buscarClienteExistente(dto.correo, dto.numero);
     if (!cliente) {
       cliente = await this.prisma.cliente.create({
         data: {
